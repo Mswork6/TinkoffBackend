@@ -1,10 +1,12 @@
 package edu.hw3;
 
-import org.jetbrains.annotations.NotNull;
-import java.util.HashMap;
 
+import java.util.HashMap;
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class Task1 {
-    private static final HashMap<Character, Character> hashMap = new HashMap<>();
+    private static final HashMap<Character, Character> HASH_MAP = new HashMap<>();
 
     private static final int AMOUNT_OF_LETTERS = 26;
     private static final int START_POS_CAPITAL_LETTERS = 65;
@@ -14,18 +16,17 @@ public class Task1 {
 
     private static void initHashMap() {
         for (int i = 0; i < AMOUNT_OF_LETTERS; i++) {
-            Task1.hashMap.put(
+            Task1.HASH_MAP.put(
                 (char) (START_POS_CAPITAL_LETTERS + i),
                 (char) (START_POS_CAPITAL_LETTERS + DISTANCE - i)
             );
-            Task1.hashMap.put(
+            Task1.HASH_MAP.put(
                 (char) (START_POS_LOWERCASE_LETTERS + i),
                 (char) (START_POS_LOWERCASE_LETTERS + DISTANCE - i)
             );
 
         }
     }
-
 
     public static String atbash(String statement) {
         if (statement == null) {
@@ -38,18 +39,13 @@ public class Task1 {
         for (int i = 0; i < statement.length(); i++) {
             char curChar = statement.charAt(i);
 
-            if (hashMap.containsKey(curChar)) {
-                res.append(hashMap.get(curChar));
+            if (HASH_MAP.containsKey(curChar)) {
+                res.append(HASH_MAP.get(curChar));
             } else {
                 res.append(curChar);
             }
         }
 
         return res.toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(atbash("Строка останется такой же ЫХЗАХЫФВАЗХЫЪЗВ 12322314"));
-
     }
 }

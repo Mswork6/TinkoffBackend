@@ -1,38 +1,39 @@
 package edu.hw3;
 
-import java.util.TreeMap;
 
+import java.util.TreeMap;
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
+@SuppressWarnings("MagicNumber")
 public class Task4 {
-    private static final TreeMap<Integer, String> treeMap = new TreeMap<>();
+
+    private static final TreeMap<Integer, String> TREE_MAP = new TreeMap<>();
 
     static {
-        treeMap.put(1, "I");
-        treeMap.put(4, "IV");
-        treeMap.put(5, "V");
-        treeMap.put(9, "IX");
-        treeMap.put(10, "X");
-        treeMap.put(40, "XL");
-        treeMap.put(50, "L");
-        treeMap.put(90, "XC");
-        treeMap.put(100, "C");
-        treeMap.put(400, "CD");
-        treeMap.put(500, "D");
-        treeMap.put(900, "CM");
-        treeMap.put(1000, "M");
+        TREE_MAP.put(1, "I");
+        TREE_MAP.put(4, "IV");
+        TREE_MAP.put(5, "V");
+        TREE_MAP.put(9, "IX");
+        TREE_MAP.put(10, "X");
+        TREE_MAP.put(40, "XL");
+        TREE_MAP.put(50, "L");
+        TREE_MAP.put(90, "XC");
+        TREE_MAP.put(100, "C");
+        TREE_MAP.put(400, "CD");
+        TREE_MAP.put(500, "D");
+        TREE_MAP.put(900, "CM");
+        TREE_MAP.put(1000, "M");
     }
 
-    public static String convertToRoman(int number) throws IllegalArgumentException{
-        if (number < 1 || number > 3999){
+    public static String convertToRoman(int number) throws IllegalArgumentException {
+        if (number < 1 || number > 3999) {
             throw new IllegalArgumentException();
         }
-        int floorValue = treeMap.floorKey(number);
-        if (floorValue == number){
-            return treeMap.get(number);
+        int floorValue = TREE_MAP.floorKey(number);
+        if (floorValue == number) {
+            return TREE_MAP.get(number);
         }
-        return treeMap.get(floorValue) + convertToRoman(number - floorValue);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(convertToRoman(23));
+        return TREE_MAP.get(floorValue) + convertToRoman(number - floorValue);
     }
 }

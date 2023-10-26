@@ -1,9 +1,11 @@
 package edu.hw3;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class Task3 {
 
     public static <T> HashMap<T, Integer> freqDict(ArrayList<T> arrayList) {
@@ -18,14 +20,5 @@ public class Task3 {
         }
 
         return hashMap;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<String> arr = new ArrayList<>();
-
-
-        HashMap<String, Integer> res = freqDict(arr);
-        System.out.println(res);
-
     }
 }

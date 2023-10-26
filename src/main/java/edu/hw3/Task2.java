@@ -1,13 +1,15 @@
 package edu.hw3;
 
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Stack;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class Task2 {
-    private static final Stack<Character> stack = new Stack<>();
+    private static final Stack<Character> STACK = new Stack<>();
 
-    private static final ArrayList<String> result = new ArrayList<>();
+    private static final ArrayList<String> RESULT = new ArrayList<>();
     private static int leftBracketCounter = 0;
     private static int rightBracketCounter = 0;
 
@@ -47,22 +49,16 @@ public class Task2 {
         }
         for (int i = 0; i < string.length(); i++) {
             char symbol = string.charAt(i);
-            stack.push(symbol);
-            if (symbol == ')' && stack.get(stack.size() - 2) == '(') {
-                stack.pop();
-                stack.pop();
+            STACK.push(symbol);
+            if (symbol == ')' && STACK.get(STACK.size() - 2) == '(') {
+                STACK.pop();
+                STACK.pop();
             }
-            if (stack.isEmpty()) {
-                result.add(string.substring(startIndex, i + 1));
+            if (STACK.isEmpty()) {
+                RESULT.add(string.substring(startIndex, i + 1));
                 startIndex = i + 1;
             }
         }
-        return result;
+        return RESULT;
     }
-
-    public static void main(String[] args) {
-        ArrayList<String> ans = clusterize("");
-        System.out.println(Arrays.toString(ans.toArray()));
-    }
-
 }

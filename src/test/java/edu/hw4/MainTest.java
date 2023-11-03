@@ -316,7 +316,7 @@ public class MainTest {
     }
 
     @Test
-    @DisplayName("Обработка пустой строки")
+    @DisplayName("Проверка наличия животных с некорректными данными")
     public void testTask19() {
         // given
 
@@ -328,7 +328,7 @@ public class MainTest {
     }
 
     @Test
-    @DisplayName("Обработка пустой строки")
+    @DisplayName("Проверка наличия животных с некорректными данными")
     public void testTask20() {
         // given
 

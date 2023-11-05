@@ -19,7 +19,7 @@ public class MazeSolver implements Solver {
         height = maze.height();
         width = maze.width();
         if (!validateInputData(start, end)) {
-            return null;
+            throw new IllegalArgumentException();
         }
         deque = new ArrayDeque<>();
         distance = new int[height][width];

@@ -26,6 +26,9 @@ public class MazeRenderer implements Renderer {
 
     @Override
     public String render(Maze maze, List<Coordinate> path) {
+        if (path == null) {
+            return null;
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("_".repeat(CELL_SIZE * maze.width() + 1));
         sb.append('\n');

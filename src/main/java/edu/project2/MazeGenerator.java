@@ -35,6 +35,9 @@ public class MazeGenerator implements Generator {
     }
 
     public MazeGenerator(int height, int width) {
+        if (height <= 0 || width <= 0) {
+            throw new IllegalArgumentException();
+        }
         this.height = height;
         this.width = width;
     }

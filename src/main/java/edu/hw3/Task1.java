@@ -5,24 +5,28 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Task1 {
-    private static final HashMap<Character, Character> HASH_MAP = new HashMap<>();
-    private static final int AMOUNT_OF_LETTERS = 26;
-    private static final int START_POS_CAPITAL_LETTERS = 65;
-    private static final int START_POS_LOWERCASE_LETTERS = 97;
-    private static final int DISTANCE = 25;
+    private static final HashMap<Character, Character> hashmap = new HashMap<>();
 
-    private static void initHashMap() {
-        for (int i = 0; i < AMOUNT_OF_LETTERS; i++) {
-            Task1.HASH_MAP.put(
-                (char) (START_POS_CAPITAL_LETTERS + i),
-                (char) (START_POS_CAPITAL_LETTERS + DISTANCE - i)
-            );
-            Task1.HASH_MAP.put(
-                (char) (START_POS_LOWERCASE_LETTERS + i),
-                (char) (START_POS_LOWERCASE_LETTERS + DISTANCE - i)
-            );
+    private static final char FIRST_CAPITAL_LETTER = 'A';
+    private static final char LAST_CAPITAL_LETTER = 'Z';
+    private static final char FIRST_LOWERCASE_LETTER = 'a';
+    private static final char LAST_LOWERCASE_LETTER = 'z';
 
+    static {
+        int amount = (int) LAST_CAPITAL_LETTER - FIRST_CAPITAL_LETTER + 1;
+        for (int i = 0; i < amount; i++) {
+            Task1.hashmap.put(
+                (char) (FIRST_CAPITAL_LETTER + i),
+                (char) (LAST_CAPITAL_LETTER - i)
+            );
+            Task1.hashmap.put(
+                (char) (FIRST_LOWERCASE_LETTER + i),
+                (char) (LAST_LOWERCASE_LETTER +- i)
+            );
         }
+    }
+    private static void initHashMap() {
+
     }
 
     public static String atbash(String statement) {
@@ -36,8 +40,8 @@ public class Task1 {
         for (int i = 0; i < statement.length(); i++) {
             char curChar = statement.charAt(i);
 
-            if (HASH_MAP.containsKey(curChar)) {
-                res.append(HASH_MAP.get(curChar));
+            if (hashmap.containsKey(curChar)) {
+                res.append(hashmap.get(curChar));
             } else {
                 res.append(curChar);
             }

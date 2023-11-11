@@ -2,6 +2,8 @@ package edu.hw3;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
+import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -11,12 +13,13 @@ public class Task2Test {
     void calculateCorrectClusters() {
         // given
         String clusters = "((()))(())()()(()())";
+        List<String> answer = Arrays.asList("((()))", "(())", "()", "()", "(()())");
 
         // when
-        Object[] result = Task2.clusterize(clusters).toArray();
+        List<String> result = Task2.clusterize(clusters);
 
         // then
-        assertThat(result).isEqualTo(new Object[] {"((()))", "(())", "()", "()", "(()())"});
+        assertThat(result).isEqualTo(answer);
     }
 
     @Test

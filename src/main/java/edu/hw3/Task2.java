@@ -2,63 +2,67 @@ package edu.hw3;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Task2 {
-    private static final Stack<Character> STACK = new Stack<>();
+    private static class StringValidator {
+        private static int leftBracketCounter = 0;
+        private static int rightBracketCounter = 0;
 
-    private static final ArrayList<String> RESULT = new ArrayList<>();
-    private static int leftBracketCounter = 0;
-    private static int rightBracketCounter = 0;
-
-    private static boolean checkSymbol(char symbol) {
-        switch (symbol) {
-            case '(' -> leftBracketCounter++;
-            case ')' -> {
-                if (rightBracketCounter >= leftBracketCounter) {
+        private static boolean checkSymbol(char symbol) {
+            switch (symbol) {
+                case '(' -> leftBracketCounter++;
+                case ')' -> {
+                    if (rightBracketCounter >= leftBracketCounter) {
+                        return false;
+                    }
+                    rightBracketCounter++;
+                }
+                default -> {
                     return false;
                 }
-                rightBracketCounter++;
             }
-            default -> {
+            return true;
+        }
+
+        private static boolean validateString(String string) {
+            if (string.isEmpty()) {
                 return false;
             }
-        }
-        return true;
-    }
-
-    private static boolean validateString(String string) {
-        if (string.isEmpty()) {
-            return false;
-        }
-        for (int i = 0; i < string.length(); i++) {
-            char symbol = string.charAt(i);
-            if (!checkSymbol(symbol)) {
-                return false;
+            for (int i = 0; i < string.length(); i++) {
+                char symbol = string.charAt(i);
+                if (!checkSymbol(symbol)) {
+                    return false;
+                }
             }
+            return leftBracketCounter == rightBracketCounter;
         }
-        return leftBracketCounter == rightBracketCounter;
     }
 
-    public static ArrayList<String> clusterize(String string) throws IllegalArgumentException {
-        int startIndex = 0;
-        if (!validateString(string)) {
+    public static List<String> clusterize(String string) throws IllegalArgumentException {
+        if (!StringValidator.validateString(string)) {
             throw new IllegalArgumentException();
         }
+        int startIndex = 0;
+        Stack<Character> stack = new Stack<>();
+        List<String> result = new ArrayList<>();
+
         for (int i = 0; i < string.length(); i++) {
             char symbol = string.charAt(i);
-            STACK.push(symbol);
-            if (symbol == ')' && STACK.get(STACK.size() - 2) == '(') {
-                STACK.pop();
-                STACK.pop();
+            switch (symbol) {
+                case '(' -> stack.push(symbol);
+                case ')' -> {
+                    if (stack.get(stack.size() - 1) == '(') stack.pop();
+                }
             }
-            if (STACK.isEmpty()) {
-                RESULT.add(string.substring(startIndex, i + 1));
+            if (stack.isEmpty()) {
+                result.add(string.substring(startIndex, i + 1));
                 startIndex = i + 1;
             }
         }
-        return RESULT;
+        return result;
     }
 }

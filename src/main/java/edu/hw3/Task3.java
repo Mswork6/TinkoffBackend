@@ -3,12 +3,14 @@ package edu.hw3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Task3 {
 
-    public static <T> HashMap<T, Integer> freqDict(ArrayList<T> arrayList) {
+    public static <T> Map<T, Integer> freqDict(List<T> arrayList) {
         HashMap<T, Integer> hashMap = new HashMap<>();
 
         for (T obj : arrayList) {

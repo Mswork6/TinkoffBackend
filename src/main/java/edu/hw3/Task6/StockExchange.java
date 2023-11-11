@@ -1,46 +1,32 @@
 package edu.hw3.Task6;
 
-import java.util.Arrays;
+import lombok.EqualsAndHashCode;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
+import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
+@EqualsAndHashCode
 public class StockExchange implements StockMarket {
-    private final PriorityQueue<Stock> queue = new PriorityQueue<>(Collections.reverseOrder());
+    private final Queue<Stock> stockQueue = new PriorityQueue<>(Collections.reverseOrder());
 
     @Override
     public void add(Stock stock) {
-        queue.add(stock);
+        stockQueue.add(stock);
     }
 
     @Override
     public void remove(Stock stock) {
-        queue.remove(stock);
+        stockQueue.remove(stock);
     }
 
     @Override
     public Stock mostValuableStock() {
-        return queue.peek();
+        return stockQueue.peek();
     }
 
-    public PriorityQueue<Stock> queue() {
-        return queue;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(queue.toArray());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj == null || obj.getClass() != this.getClass()) {
-            return false;
-        }
-        var that = (StockExchange) obj;
-        return Arrays.equals(this.queue.toArray(), that.queue.toArray());
+    public List<Stock> getStocks() {
+        return new ArrayList<>(stockQueue);
     }
 }

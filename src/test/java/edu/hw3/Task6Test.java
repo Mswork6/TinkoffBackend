@@ -4,6 +4,11 @@ import edu.hw3.Task6.Stock;
 import edu.hw3.Task6.StockExchange;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task6Test {
     @Test
@@ -16,14 +21,18 @@ public class Task6Test {
         result.add(new Stock("MIT", 300));
         result.add(new Stock("XLE", 236));
         result.add(new Stock("LIJ", 438));
+        List<Stock> resultList = result.getStocks();
 
         // then
-        StockExchange answer = new StockExchange();
+        Queue<Stock> answer = new PriorityQueue<>(Collections.reverseOrder());
         answer.add(new Stock("MIT", 300));
         answer.add(new Stock("XLE", 236));
         answer.add(new Stock("LIJ", 438));
+        List<Stock> answerList = new ArrayList<>(answer);
 
-        assertEquals(result, answer);
+
+
+        assertEquals(resultList, answerList);
         /*Я здесь сравниваю экземпляры класса, потому что немного не разобрался как сравнивать
         * сами очереди. У них всё время разные хеши и из-за этого проверка на равенство всегда
         * оказывалась ложной :-(
@@ -42,13 +51,15 @@ public class Task6Test {
         result.add(new Stock("XLE", 236));
         result.add(new Stock("LIJ", 438));
         result.remove(new Stock("XLE", 236));
+        List<Stock> resultList = result.getStocks();
 
         // then
-        StockExchange answer = new StockExchange();
+        Queue<Stock> answer = new PriorityQueue<>(Collections.reverseOrder());
         answer.add(new Stock("MIT", 300));
         answer.add(new Stock("LIJ", 438));
+        List<Stock> answerList = new ArrayList<>(answer);
 
-        assertEquals(result, answer);
+        assertEquals(resultList, answerList);
     }
 
     @Test
@@ -68,6 +79,73 @@ public class Task6Test {
 
         // then
         Stock answer = new Stock("TFI", 976);
+
+        assertEquals(stockResult, answer);
+    }
+
+    @Test
+    @DisplayName("Проверка нахождения самой дорогой акции, добавленной в конце")
+    void mostValuableStockTest2() {
+        // given
+        StockExchange result = new StockExchange();
+
+        // when
+        result.add(new Stock("MIT", 300));
+        result.add(new Stock("XLE", 236));
+        result.add(new Stock("LIJ", 438));
+        result.remove(new Stock("XLE", 236));
+        result.remove(new Stock("LIJ", 438));
+        result.remove(new Stock("MIT", 300));
+        result.add(new Stock("RUR", 777));
+        result.add(new Stock("TFI", 976));
+
+        Stock stockResult = result.mostValuableStock();
+
+        // then
+        Stock answer = new Stock("TFI", 976);
+
+        assertEquals(stockResult, answer);
+    }
+
+    @Test
+    @DisplayName("Проверка нахождения самой дорогой акции, добавленной в начале")
+    void mostValuableStockTest3() {
+        // given
+        StockExchange result = new StockExchange();
+
+        // when
+        result.add(new Stock("DEL", 1300));
+        result.add(new Stock("MIT", 300));
+        result.add(new Stock("XLE", 236));
+        result.add(new Stock("LIJ", 438));
+        result.add(new Stock("RUR", 777));
+        result.add(new Stock("TFI", 976));
+
+        Stock stockResult = result.mostValuableStock();
+
+        // then
+        Stock answer = new Stock("DEL", 1300);
+
+        assertEquals(stockResult, answer);
+    }
+
+    @Test
+    @DisplayName("Проверка нахождения самой дорогой акции среди нескольких"
+        + "с одинаковой ценой")
+    void mostValuableStockFromEquals() {
+        // given
+        StockExchange result = new StockExchange();
+
+        // when
+        result.add(new Stock("DRM", 430));
+        result.add(new Stock("MLP", 1300));
+        result.add(new Stock("LPS", 977));
+        result.add(new Stock("LXS", 1300));
+
+        Stock stockResult = result.mostValuableStock();
+
+        // then
+        Stock answer = new Stock("MLP", 1300);
 
         assertEquals(stockResult, answer);
     }

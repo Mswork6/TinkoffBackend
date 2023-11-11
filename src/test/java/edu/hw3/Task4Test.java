@@ -2,6 +2,10 @@ package edu.hw3;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -31,6 +35,20 @@ public class Task4Test {
         // then
         assertThat(result).isEqualTo("MMMCMXCIX");
     }
+
+    @ParameterizedTest
+    @CsvSource({"87,LXXXVII", "385,CCCLXXXV", "977,CMLXXVII", "1567,MDLXVII"})
+    @DisplayName("Обработка различных значений")
+    void calculateDifferentNumbers(int number, String answer) {
+        // given
+
+        // when
+        String result = Task4.convertToRoman(number);
+
+        // then
+        assertThat(result).isEqualTo(answer);
+    }
+
 
     @Test
     @DisplayName("Обработка значения меньше минимального")

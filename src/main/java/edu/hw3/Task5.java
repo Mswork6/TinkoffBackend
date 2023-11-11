@@ -3,11 +3,15 @@ package edu.hw3;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @UtilityClass
+@ToString
+@EqualsAndHashCode
 public class Task5 {
     public static Contact[] parseContacts(String[] contacts, String type) {
         if (contacts == null || type == null) {
@@ -60,15 +64,15 @@ public class Task5 {
                 return surnameComparison;
             }
         }
-
-        public String name() {
-            return name;
-        }
-
-        public String surname() {
-            return surname;
-        }
-
+//
+//        public String name() {
+//            return name;
+//        }
+//
+//        public String surname() {
+//            return surname;
+//        }
+//
         @Override
         public boolean equals(Object obj) {
             if (obj == this) {
@@ -81,19 +85,19 @@ public class Task5 {
             return Objects.equals(this.name, that.name)
                 && Objects.equals(this.surname, that.surname);
         }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(name, surname);
-        }
-
-        @Override
-        public String toString() {
-            return "Contact["
-                + "name=" + name + ", "
-                + "surname="
-                + surname
-                + ']';
-        }
+//
+//        @Override
+//        public int hashCode() {
+//            return Objects.hash(name, surname);
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return "Contact["
+//                + "name=" + name + ", "
+//                + "surname="
+//                + surname
+//                + ']';
+//        }
     }
 }

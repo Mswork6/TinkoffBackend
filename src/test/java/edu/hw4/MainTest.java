@@ -55,7 +55,7 @@ public class MainTest {
         // given
 
         // when
-        List<Animal> result = Main.task1(animals);
+        List<Animal> result = Main.animalHeightSort(animals);
 
         // then
         for (int i = 0; i < result.size() - 1; i++) {
@@ -70,7 +70,7 @@ public class MainTest {
         int k = 3;
 
         // when
-        List<Animal> result = Main.task2(animals, k);
+        List<Animal> result = Main.animalWeightSort(animals, k);
 
         // then
         assertEquals(result.size(), k);
@@ -85,7 +85,7 @@ public class MainTest {
         // given
 
         // when
-        Map<Animal.Type, Integer> result = Main.task3(animals);
+        Map<Animal.Type, Integer> result = Main.animalCount(animals);
 
         // then
         assertEquals(result.get(Type.CAT), 7);
@@ -101,7 +101,7 @@ public class MainTest {
         // given
 
         // when
-        Animal result = Main.task4(animals);
+        Animal result = Main.animalLongestName(animals);
 
         // then
         assertEquals(result.name(), "Dory Tina Lina");
@@ -113,7 +113,7 @@ public class MainTest {
         // given
 
         // when
-        Animal.Sex result = Main.task5(animals);
+        Animal.Sex result = Main.animalSexCount(animals);
 
         // then
         assertEquals(result, Animal.Sex.M);
@@ -125,7 +125,7 @@ public class MainTest {
         // given
 
         // when
-        Map<Animal.Type, Animal> result = Main.task6(animals);
+        Map<Animal.Type, Animal> result = Main.heaviestAnimal(animals);
 
         // then
         assertEquals(result.get(Animal.Type.CAT).name(), "Tiger");
@@ -142,7 +142,7 @@ public class MainTest {
         int k = 2;
 
         // when
-        Animal result = Main.task7(animals, k);
+        Animal result = Main.oldestAnimal(animals, k);
 
         // then
         assertEquals(result.name(), "Tiger");
@@ -156,7 +156,7 @@ public class MainTest {
         int k = 50;
 
         // when
-        Optional<Animal> result = Main.task8(animals, k);
+        Optional<Animal> result = Main.heaviestHeightAnimal(animals, k);
 
         // then
         assertTrue(result.isPresent());
@@ -169,7 +169,7 @@ public class MainTest {
         // given
 
         // when
-        int result = Main.task9(animals);
+        int result = Main.pawCount(animals);
 
         // then
         assertEquals(result, 92);
@@ -181,7 +181,7 @@ public class MainTest {
         // given
 
         // when
-        List<Animal> result = Main.task10(animals);
+        List<Animal> result = Main.animalsAgeNotEqualPaws(animals);
 
         // then
         for (Animal animal : result) {
@@ -195,7 +195,7 @@ public class MainTest {
         // given
 
         // when
-        List<Animal> result = Main.task11(animals);
+        List<Animal> result = Main.animalsBite(animals);
 
         // then
         for (Animal animal : result) {
@@ -209,7 +209,7 @@ public class MainTest {
         // given
 
         // when
-        int result = Main.task12(animals);
+        int result = Main.animalsWeightMoreThanHeight(animals);
 
         // then
         assertEquals(result, 1);
@@ -221,7 +221,7 @@ public class MainTest {
         // given
 
         // when
-        List<Animal> result = Main.task13(animals);
+        List<Animal> result = Main.twoNameAnimal(animals);
 
         // then
         for (Animal animal : result) {
@@ -236,7 +236,7 @@ public class MainTest {
         int height = 15;
 
         // when
-        boolean result = Main.task14(animals, height);
+        boolean result = Main.hasDogHeight(animals, height);
 
         // then
         assertTrue(result);
@@ -250,7 +250,7 @@ public class MainTest {
         int maxAge = 5;
 
         // when
-        Map<Animal.Type, Integer> result = Main.task15(animals, minAge, maxAge);
+        Map<Animal.Type, Integer> result = Main.animalWeightSum(animals, minAge, maxAge);
 
         // then
         assertEquals(result.get(Animal.Type.CAT), 13);
@@ -265,15 +265,15 @@ public class MainTest {
         // given
 
         // when
-        List<Animal> result = Main.task16(animals);
+        List<Animal> result = Main.animalTypeList(animals);
 
         // then
         for (int i = 0; i < result.size() - 1; i++) {
-            int typeComparison = result.get(i).type().toString()
-                    .compareTo(result.get(i + 1).type().toString());
+            int typeComparison = result.get(i).type()
+                    .compareTo(result.get(i + 1).type());
             if (typeComparison == 0) {
-                int sexComparison = result.get(i).sex().toString()
-                        .compareTo(result.get(i + 1).sex().toString());
+                int sexComparison = result.get(i).sex()
+                        .compareTo(result.get(i + 1).sex());
                 if (sexComparison == 0) {
                     assertTrue(result.get(i).name().compareTo(result.get(i + 1).name()) <= 0);
                 } else {
@@ -292,7 +292,7 @@ public class MainTest {
         // given
 
         // when
-        boolean result = Main.task17(animals);
+        boolean result = Main.spiderBitesMoreThanDogs(animals);
 
         // then
 
@@ -309,7 +309,7 @@ public class MainTest {
         animalLists.add(animals.subList(10, 27));
 
         // when
-        Animal result = Main.task18(animalLists);
+        Animal result = Main.heaviestFish(animalLists);
 
         // then
         assertEquals(result.name(), "Vic");
@@ -321,7 +321,7 @@ public class MainTest {
         // given
 
         // when
-        Map<String, Set<ValidationError>> result = Main.task19(animals);
+        Map<String, Set<ValidationError>> result = Main.animalErrorCount(animals);
 
         // then
         assertEquals(result.size(), 6);
@@ -333,7 +333,7 @@ public class MainTest {
         // given
 
         // when
-        Map<String, String> result = Main.task20(animals);
+        Map<String, String> result = Main.animalErrorList(animals);
 
         // then
         assertEquals(result.size(), 6);

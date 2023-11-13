@@ -6,7 +6,7 @@ import java.util.Set;
 
 public record ValidationError(String message) {
 
-    public static Set<ValidationError> validateAnimal19(Animal animal) {
+    public static Set<ValidationError> validate19(Animal animal) {
         Set<ValidationError> errors = new HashSet<>();
 
         if (Objects.equals(animal.name(), "")) {
@@ -28,7 +28,7 @@ public record ValidationError(String message) {
         return errors;
     }
 
-    public static String validateAnimal20(Animal animal) {
+    public static String validate20(Animal animal) {
         String errors = "";
 
         if (Objects.equals(animal.name(), "")) {

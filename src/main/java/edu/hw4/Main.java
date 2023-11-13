@@ -19,7 +19,7 @@ public final class Main {
     /**
      * Отсортировать животных по росту от самого маленького к самому большому
      */
-    public static List<Animal> task1(List<Animal> list) {
+    public static List<Animal> animalHeightSort(List<Animal> list) {
         return list.stream()
                 .sorted(Comparator.comparing(Animal::height))
                 .toList();
@@ -28,7 +28,7 @@ public final class Main {
     /**
      * Отсортировать животных по весу от самого тяжелого к самому легкому, выбрать k первых
      */
-    public static List<Animal> task2(List<Animal> list, int number) {
+    public static List<Animal> animalWeightSort(List<Animal> list, int number) {
         return list.stream()
                 .sorted(Comparator.comparing(Animal::weight, Collections.reverseOrder()))
                 .limit(number)
@@ -38,7 +38,7 @@ public final class Main {
     /**
      * Сколько животных каждого вида
      */
-    public static Map<Animal.Type, Integer> task3(List<Animal> list) {
+    public static Map<Animal.Type, Integer> animalCount(List<Animal> list) {
         return list.stream()
                 .collect(groupingBy(Animal::type, Collectors.summingInt(animal -> 1)));
     }
@@ -46,7 +46,7 @@ public final class Main {
     /**
      * У какого животного самое длинное имя
      */
-    public static Animal task4(List<Animal> list) {
+    public static Animal animalLongestName(List<Animal> list) {
         return list.stream()
                 .max(Comparator.comparing(animal -> animal.name().length()))
                 .orElseThrow();
@@ -55,7 +55,7 @@ public final class Main {
     /**
      * Каких животных больше: самцов или самок
      */
-    public static Animal.Sex task5(List<Animal> list) {
+    public static Animal.Sex animalSexCount(List<Animal> list) {
         return list.stream()
                 .collect(groupingBy(Animal::sex, counting()))
                 .entrySet()
@@ -66,7 +66,7 @@ public final class Main {
     /**
      * Самое тяжелое животное каждого вида
      */
-    public static Map<Animal.Type, Animal> task6(List<Animal> list) {
+    public static Map<Animal.Type, Animal> heaviestAnimal(List<Animal> list) {
         return list.stream()
                 .collect(groupingBy(Animal::type, Collectors.maxBy(Comparator.comparing(Animal::weight))))
                 .entrySet()
@@ -78,17 +78,18 @@ public final class Main {
     /**
      * K-е самое старое животное
      */
-    public static Animal task7(List<Animal> list, int number) {
+    public static Animal oldestAnimal(List<Animal> list, int number) {
         return list.stream()
                 .sorted(Comparator.comparing(Animal::age, Collections.reverseOrder()))
-                .toList()
-                .get(number - 1);
+                .skip(number - 1)
+                .findFirst()
+                .orElseThrow();
     }
 
     /**
      * Самое тяжелое животное среди животных ниже k см
      */
-    public static Optional<Animal> task8(List<Animal> list, int number) {
+    public static Optional<Animal> heaviestHeightAnimal(List<Animal> list, int number) {
         return list.stream()
                 .filter(animal -> animal.height() < number)
                 .max(Comparator.comparing(Animal::weight));
@@ -97,7 +98,7 @@ public final class Main {
     /**
      * Сколько в сумме лап у животных в списке
      */
-    public static Integer task9(List<Animal> list) {
+    public static Integer pawCount(List<Animal> list) {
         return list.stream()
                 .mapToInt(Animal::paws)
                 .sum();
@@ -106,7 +107,7 @@ public final class Main {
     /**
      * Список животных, возраст у которых не совпадает с количеством лап
      */
-    public static List<Animal> task10(List<Animal> list) {
+    public static List<Animal> animalsAgeNotEqualPaws(List<Animal> list) {
         return list.stream()
                 .filter(animal -> animal.age() != animal.paws())
                 .toList();
@@ -116,7 +117,7 @@ public final class Main {
      * Список животных, которые могут укусить (bites == null или true) и рост которых превышает 100 см
      */
     @SuppressWarnings("MagicNumber")
-    public static List<Animal> task11(List<Animal> list) {
+    public static List<Animal> animalsBite(List<Animal> list) {
         return list.stream()
                 .filter(animal -> (animal.bites() == null || animal.bites()) && animal.height() > 100)
                 .toList();
@@ -125,7 +126,7 @@ public final class Main {
     /**
      * Сколько в списке животных, вес которых превышает рост
      */
-    public static Integer task12(List<Animal> list) {
+    public static Integer animalsWeightMoreThanHeight(List<Animal> list) {
         return Math.toIntExact(list.stream()
                 .filter(animal -> animal.weight() > animal.height())
                 .count());
@@ -134,16 +135,16 @@ public final class Main {
     /**
      * Список животных, имена которых состоят из более чем двух слов
      */
-    public static List<Animal> task13(List<Animal> list) {
+    public static List<Animal> twoNameAnimal(List<Animal> list) {
         return list.stream()
-                .filter(animal -> animal.name().split(" ").length > 2)
+                .filter(animal -> animal.name().contains(" "))
                 .toList();
     }
 
     /**
      * Есть ли в списке собака ростом более k см
      */
-    public static Boolean task14(List<Animal> list, int height) {
+    public static Boolean hasDogHeight(List<Animal> list, int height) {
         return list.stream()
                 .anyMatch(animal -> animal.type() == Type.DOG && animal.height() > height);
     }
@@ -151,7 +152,7 @@ public final class Main {
     /**
      * Найти суммарный вес животных каждого вида, которым от k до l лет
      */
-    public static Map<Animal.Type, Integer> task15(List<Animal> list, int min, int max) {
+    public static Map<Animal.Type, Integer> animalWeightSum(List<Animal> list, int min, int max) {
         return list.stream()
                 .filter(animal -> animal.age() > Math.min(min, max) && animal.age() < Math.max(min, max))
                 .collect(groupingBy(Animal::type, Collectors.summingInt(Animal::weight)));
@@ -160,25 +161,20 @@ public final class Main {
     /**
      * Список животных, отсортированный по виду, затем по полу, затем по имени
      */
-    public static List<Animal> task16(List<Animal> list) {
+    public static List<Animal> animalTypeList(List<Animal> list) {
         return list.stream()
-                .sorted((o1, o2) -> {
-                    if (o1.type() == o2.type()) {
-                        if (o1.sex() == o2.sex()) {
-                            return o1.name().compareTo(o2.name());
-                        } else {
-                            return o1.sex().toString().compareTo(o2.sex().toString());
-                        }
-                    }
-                    return o1.type().toString().compareTo(o2.type().toString());
-                })
+                .sorted(
+                    Comparator.comparing(Animal::type)
+                        .thenComparing(Animal::sex)
+                        .thenComparing(Animal::name)
+                )
                 .toList();
     }
 
     /**
      * Правда ли, что пауки кусаются чаще, чем собаки
      */
-    public static Boolean task17(List<Animal> list) {
+    public static Boolean spiderBitesMoreThanDogs(List<Animal> list) {
         long spiderBites = list.stream()
                 .filter(animal -> animal.type() == Type.SPIDER && animal.bites())
                 .count();
@@ -206,7 +202,7 @@ public final class Main {
     /**
      * Найти самую тяжелую рыбку в 2-х или более списках
      */
-    public static Animal task18(List<List<Animal>> list) {
+    public static Animal heaviestFish(List<List<Animal>> list) {
         return list.stream()
                 .flatMap(Collection::stream)
                 .filter(animal -> animal.type() == Type.FISH)
@@ -217,11 +213,11 @@ public final class Main {
     /**
      * Животные, в записях о которых есть ошибки: вернуть имя и список ошибок
      */
-    public static Map<String, Set<ValidationError>> task19(List<Animal> list) {
+    public static Map<String, Set<ValidationError>> animalErrorCount(List<Animal> list) {
         return list.stream()
                 .collect(Collectors.toMap(
                         Animal::name,
-                        ValidationError::validateAnimal19
+                        ValidationError::validate19
                 ))
                 .entrySet()
                 .stream()
@@ -236,11 +232,11 @@ public final class Main {
      * Животные, в записях о которых есть ошибки: вернуть имя и
      * названия полей с ошибками, объединенные в строку
      */
-    public static Map<String, String> task20(List<Animal> list) {
+    public static Map<String, String> animalErrorList(List<Animal> list) {
         return list.stream()
                 .collect(Collectors.toMap(
                         Animal::name,
-                        ValidationError::validateAnimal20
+                        ValidationError::validate20
                 ))
                 .entrySet()
                 .stream()

@@ -11,7 +11,7 @@ import lombok.experimental.UtilityClass;
 public class Task3 {
 
     public static <T> Map<T, Integer> freqDict(List<T> arrayList) {
-        HashMap<T, Integer> hashMap = new HashMap<>();
+        Map<T, Integer> hashMap = new HashMap<>();
 
         for (T obj : arrayList) {
             if (hashMap.containsKey(obj)) {

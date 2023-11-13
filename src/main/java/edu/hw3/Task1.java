@@ -21,7 +21,7 @@ public class Task1 {
             );
             Task1.hashmap.put(
                 (char) (FIRST_LOWERCASE_LETTER + i),
-                (char) (LAST_LOWERCASE_LETTER +- i)
+                (char) (LAST_LOWERCASE_LETTER - i)
             );
         }
     }
@@ -30,6 +30,7 @@ public class Task1 {
     }
 
     public static String atbash(String statement) {
+        System.out.println(hashmap.toString());
         if (statement == null) {
             return "";
         }

@@ -13,7 +13,7 @@ public class Task3Test {
     @DisplayName("Создание частотного словаря строк")
     void calculateStringDict() {
         // given
-        ArrayList<String> array = new ArrayList<>();
+        List<String> array = new ArrayList<>();
         array.add("string");
         array.add("this");
         array.add("a");
@@ -41,7 +41,7 @@ public class Task3Test {
     @DisplayName("Создание частотного словаря чисел")
     void calculateIntegerDict() {
         // given
-        ArrayList<Integer> array = new ArrayList<>();
+        List<Integer> array = new ArrayList<>();
         array.add(4);
         array.add(4);
         array.add(4);

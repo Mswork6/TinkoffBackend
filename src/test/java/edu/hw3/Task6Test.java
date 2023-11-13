@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 public class Task6Test {
     @Test
     @DisplayName("Проверка добавления элементов в очередь")
@@ -143,6 +145,31 @@ public class Task6Test {
         Stock answer = new Stock("MLP", 1300);
 
         assertEquals(stockResult, answer);
+    }
+
+    @Test
+    @DisplayName("Проверка нахождения самой дорогой акции в пустой очереди")
+    void tryPeekEmptyQueue() {
+        // given
+        StockExchange result = new StockExchange();
+
+        // when
+        Stock stockResult = result.mostValuableStock();
+
+        // then
+        assertNull(stockResult);
+    }
+
+    @Test
+    @DisplayName("Проверка удаления акции из пустой очереди без ошибок")
+    void tryRemoveFromEmptyQueue() {
+        // given
+        StockExchange result = new StockExchange();
+
+        // when
+        result.remove(new Stock("LFP", 586));
+
+        // then
     }
 
 }

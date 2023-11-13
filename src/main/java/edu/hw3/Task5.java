@@ -2,16 +2,12 @@ package edu.hw3;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Objects;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 @UtilityClass
-@ToString
-@EqualsAndHashCode
 public class Task5 {
     public static Contact[] parseContacts(String[] contacts, String type) {
         if (contacts == null || type == null) {
@@ -33,14 +29,11 @@ public class Task5 {
         return result;
     }
 
+    @ToString
+    @EqualsAndHashCode
     public static final class Contact implements Comparable<Contact> {
         private final String name;
         private final String surname;
-
-        public Contact(@NotNull String name, @Nullable String surname) {
-            this.name = name;
-            this.surname = surname;
-        }
 
         public Contact(@NotNull String parseableContact) {
             var tokens = parseableContact.split(" ");
@@ -64,40 +57,5 @@ public class Task5 {
                 return surnameComparison;
             }
         }
-//
-//        public String name() {
-//            return name;
-//        }
-//
-//        public String surname() {
-//            return surname;
-//        }
-//
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == this) {
-                return true;
-            }
-            if (obj == null || obj.getClass() != this.getClass()) {
-                return false;
-            }
-            var that = (Contact) obj;
-            return Objects.equals(this.name, that.name)
-                && Objects.equals(this.surname, that.surname);
-        }
-//
-//        @Override
-//        public int hashCode() {
-//            return Objects.hash(name, surname);
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return "Contact["
-//                + "name=" + name + ", "
-//                + "surname="
-//                + surname
-//                + ']';
-//        }
     }
 }

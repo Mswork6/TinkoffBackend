@@ -1,11 +1,11 @@
 package edu.hw3.Task6;
 
-import lombok.EqualsAndHashCode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
 public class StockExchange implements StockMarket {

@@ -9,10 +9,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import lombok.experimental.UtilityClass;
+
 import static edu.hw4.Animal.Type;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.*;
 
 @UtilityClass
 public final class Main {
@@ -68,12 +69,16 @@ public final class Main {
      */
     public static Map<Animal.Type, Animal> heaviestAnimal(List<Animal> list) {
         return list.stream()
-                .collect(groupingBy(Animal::type, Collectors.maxBy(Comparator.comparing(Animal::weight))))
-                .entrySet()
-                .stream()
-                .map(entry -> Map.entry(entry.getKey(), entry.getValue().orElseThrow()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(groupingBy(Animal::type,
+                        collectingAndThen(
+                                Collectors.maxBy(Comparator.comparing(Animal::weight)),
+                                Optional::orElseThrow
+                        )));
     }
+    /* Не совсем понял как реализовать это именно через .collect(Collectors.toMap())
+    Но данная моя реализация по факту делает то же самое, она так же возвращает мапу
+     */
+
 
     /**
      * K-е самое старое животное
@@ -164,9 +169,9 @@ public final class Main {
     public static List<Animal> animalTypeList(List<Animal> list) {
         return list.stream()
                 .sorted(
-                    Comparator.comparing(Animal::type)
-                        .thenComparing(Animal::sex)
-                        .thenComparing(Animal::name)
+                        Comparator.comparing(Animal::type)
+                                .thenComparing(Animal::sex)
+                                .thenComparing(Animal::name)
                 )
                 .toList();
     }
@@ -213,11 +218,11 @@ public final class Main {
     /**
      * Животные, в записях о которых есть ошибки: вернуть имя и список ошибок
      */
-    public static Map<String, Set<ValidationError>> animalErrorCount(List<Animal> list) {
+    public static Map<String, Set<AnimalValidator.ValidationError>> animalErrorCount(List<Animal> list) {
         return list.stream()
                 .collect(Collectors.toMap(
                         Animal::name,
-                        ValidationError::validate19
+                        AnimalValidator::validate
                 ))
                 .entrySet()
                 .stream()
@@ -236,14 +241,12 @@ public final class Main {
         return list.stream()
                 .collect(Collectors.toMap(
                         Animal::name,
-                        ValidationError::validate20
+                        AnimalValidator::validate
                 ))
                 .entrySet()
                 .stream()
                 .filter(stringSetEntry -> !stringSetEntry.getValue().isEmpty())
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue
+                .collect(Collectors.toMap(Map.Entry::getKey, value -> value.getValue().toString()
                 ));
     }
 }

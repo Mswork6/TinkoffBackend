@@ -23,7 +23,7 @@ public class MainTest {
                 new Animal("Goldie", Type.FISH, Sex.F, 1, 2, 0, false),
                 new Animal("Charlotte", Type.SPIDER, Sex.F, 3, 1, 2, false),
                 new Animal("Tweetie", Type.BIRD, Sex.F, 1, 3, 1, false),
-                new Animal("Spiderman", Type.SPIDER, Sex.M, 1, 1, 0, true),
+                new Animal("Spiderman", Type.SPIDER, Sex.M, -1, -1, 0, true),
                 new Animal("Max", Type.DOG, Sex.M, 3, 90, 18, true),
                 new Animal("Luna", Type.CAT, Sex.F, 4, 25, 7, false),
                 new Animal("Nemo", Type.FISH, Sex.M, 1, 1, 0, false),
@@ -321,7 +321,8 @@ public class MainTest {
         // given
 
         // when
-        Map<String, Set<ValidationError>> result = Main.animalErrorCount(animals);
+        Map<String, Set<AnimalValidator.ValidationError>> result = Main.animalErrorCount(animals);
+        System.out.println(result.toString());
 
         // then
         assertEquals(result.size(), 6);
@@ -334,6 +335,7 @@ public class MainTest {
 
         // when
         Map<String, String> result = Main.animalErrorList(animals);
+        System.out.println(result.toString());
 
         // then
         assertEquals(result.size(), 6);

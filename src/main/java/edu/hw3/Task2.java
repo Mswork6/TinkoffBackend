@@ -9,7 +9,8 @@ import lombok.experimental.UtilityClass;
 public class Task2 {
     @SuppressWarnings("MissingSwitchDefault")
     public static List<String> clusterize(String string) throws IllegalArgumentException {
-        if (!StringValidator.validateString(string)) {
+        StringValidator validator = new StringValidator();
+        if (!validator.validateString(string)) {
             throw new IllegalArgumentException();
         }
         int startIndex = 0;
@@ -21,11 +22,7 @@ public class Task2 {
 
             switch (symbol) {
                 case '(' -> stack.push(symbol);
-                case ')' -> {
-                    if (stack.get(stack.size() - 1) == '(') {
-                        stack.pop();
-                    }
-                }
+                case ')' -> stack.pop();
             }
             if (stack.isEmpty()) {
                 result.add(string.substring(startIndex, i + 1));
@@ -35,11 +32,11 @@ public class Task2 {
         return result;
     }
 
-    private static class StringValidator {
-        private static int leftBracketCounter = 0;
-        private static int rightBracketCounter = 0;
+    private class StringValidator {
+        private int leftBracketCounter = 0;
+        private int rightBracketCounter = 0;
 
-        private static boolean checkSymbol(char symbol) {
+        private boolean checkSymbol(char symbol) {
             switch (symbol) {
                 case '(' -> leftBracketCounter++;
                 case ')' -> {
@@ -55,7 +52,7 @@ public class Task2 {
             return true;
         }
 
-        private static boolean validateString(String string) {
+        private boolean validateString(String string) {
             if (string.isEmpty()) {
                 return false;
             }

@@ -6,18 +6,18 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Task1 {
+    private static final Map<Character, Character> ALPHABET_MAP = HashMapInitializer.initialize();
     public static String atbash(String statement) {
         if (statement == null) {
             return "";
         }
-        Map<Character, Character> aplphabetMap = HashMapInitializer.initialize();
         StringBuilder res = new StringBuilder();
 
         for (int i = 0; i < statement.length(); i++) {
             char curChar = statement.charAt(i);
 
-            if (aplphabetMap.containsKey(curChar)) {
-                res.append(aplphabetMap.get(curChar));
+            if (ALPHABET_MAP.containsKey(curChar)) {
+                res.append(ALPHABET_MAP.get(curChar));
             } else {
                 res.append(curChar);
             }

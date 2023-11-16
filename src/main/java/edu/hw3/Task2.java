@@ -10,9 +10,7 @@ public class Task2 {
     @SuppressWarnings("MissingSwitchDefault")
     public static List<String> clusterize(String string) throws IllegalArgumentException {
         StringValidator validator = new StringValidator();
-        if (!validator.validateString(string)) {
-            throw new IllegalArgumentException();
-        }
+        validator.validateString(string);
         int startIndex = 0;
         Stack<Character> stack = new Stack<>();
         List<String> result = new ArrayList<>();
@@ -52,17 +50,19 @@ public class Task2 {
             return true;
         }
 
-        private boolean validateString(String string) {
+        private void validateString(String string) throws IllegalArgumentException {
             if (string.isEmpty()) {
-                return false;
+                throw new IllegalArgumentException();
             }
             for (int i = 0; i < string.length(); i++) {
                 char symbol = string.charAt(i);
                 if (!checkSymbol(symbol)) {
-                    return false;
+                    throw new IllegalArgumentException();
                 }
             }
-            return leftBracketCounter == rightBracketCounter;
+            if (leftBracketCounter != rightBracketCounter) {
+                throw new IllegalArgumentException();
+            }
         }
     }
 }

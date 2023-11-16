@@ -7,6 +7,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class Task1 {
     private static final Map<Character, Character> ALPHABET_MAP = HashMapInitializer.initialize();
+
     public static String atbash(String statement) {
         if (statement == null) {
             return "";
@@ -37,12 +38,12 @@ public class Task1 {
             int amount = (int) LAST_CAPITAL_LETTER - FIRST_CAPITAL_LETTER + 1;
             for (int i = 0; i < amount; i++) {
                 aplhabetMap.put(
-                        (char) (FIRST_CAPITAL_LETTER + i),
-                        (char) (LAST_CAPITAL_LETTER - i)
+                    (char) (FIRST_CAPITAL_LETTER + i),
+                    (char) (LAST_CAPITAL_LETTER - i)
                 );
                 aplhabetMap.put(
-                        (char) (FIRST_LOWERCASE_LETTER + i),
-                        (char) (LAST_LOWERCASE_LETTER - i)
+                    (char) (FIRST_LOWERCASE_LETTER + i),
+                    (char) (LAST_LOWERCASE_LETTER - i)
                 );
             }
             return aplhabetMap;

@@ -19,7 +19,7 @@ class ConsoleHangman {
     ConsoleHangman(HangmanSession session) {
         this.session = session;
     }
-    /* Конструктор для отладки, чтобы можно было отслеживать изменения в сессии.
+    /* Конструктор больше для отладки, чтобы можно было отслеживать изменения в сессии.
     Можно конечно было сделать метод, который возвращал саму сессию отсюда, но мне показалось,
     что так получше будет.
      */
@@ -41,6 +41,7 @@ class ConsoleHangman {
 
         informer.info("Добро пожаловать в игру 'Виселица'!");
         informer.info("У вас есть " + result.attempt() + " попыток, чтобы угадать слово.");
+        informer.info("Загаданное слово: " + Arrays.toString(result.state()));
         informer.info("Для сдачи введите 'сдаться'");
 
         while (true) {
@@ -71,7 +72,7 @@ class ConsoleHangman {
         run(System.in, System.out);
     }
     /* Сделал метод с перегрузкой чтобы можно было работать с разными потоками ввода - вывода,
-    чем собственно и воспользовался в тестах :-)
+    чем собственно и воспользовался в тестах:-)
      */
 
     private record GameInformer(PrintStream output) {

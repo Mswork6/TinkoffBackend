@@ -4,10 +4,11 @@ import edu.project1.GuessResult.Defeat;
 import edu.project1.GuessResult.FailedGuess;
 import edu.project1.GuessResult.SuccessfulGuess;
 import edu.project1.GuessResult.Win;
+import lombok.Getter;
 
 class HangmanSession {
     private final String answer;
-    private GuessResult result;
+    @Getter private GuessResult result;
 
     HangmanSession(String answer, int maxAttempts) {
         this.answer = answer.toLowerCase(); // Приводим слово к нижнему регистру для удобства сравнения
@@ -40,10 +41,6 @@ class HangmanSession {
                 this.result = new FailedGuess(wordState, attemptState, "Неправильно. ");
             }
         }
-    }
-
-    public GuessResult getResult() {
-        return result;
     }
 
     public void giveUp() {

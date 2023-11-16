@@ -1,80 +1,92 @@
 package edu.project1;
 
 import edu.project1.GuessResult.Defeat;
-import edu.project1.GuessResult.StartState;
 import edu.project1.GuessResult.Win;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 class ConsoleHangman {
-    private static final int MAX_ATTEMPTS = 10;
-    private GuessResult result;
-    private final Session session;
+    private final HangmanSession session;
 
-    ConsoleHangman(Dictionary dictionary) {
-        this.session = new Session(dictionary.randomWord(), MAX_ATTEMPTS);
-        this.result = new StartState(MAX_ATTEMPTS);
+    private final static String GIVE_UP_STRING = "сдаться";
+
+    ConsoleHangman(Dictionary dictionary, int maxAttempts) {
+        this.session = new HangmanSession(dictionary.randomWord(), maxAttempts);
     }
 
-    ConsoleHangman(String answer) {
-        this.session = new Session(answer, MAX_ATTEMPTS);
-        this.result = new StartState(MAX_ATTEMPTS);
+    ConsoleHangman(HangmanSession session) {
+        this.session = session;
     }
+    /* Конструктор для отладки, чтобы можно было отслеживать изменения в сессии.
+    Можно конечно было сделать метод, который возвращал саму сессию отсюда, но мне показалось,
+    что так получше будет.
+     */
 
-    @SuppressWarnings("RegexpSinglelineJava") private static void gameLog(String message) {
-        System.out.println(message);
-    }
-
-    private GuessResult processCommand(String command) throws UnsupportedOperationException {
-        if (command.equalsIgnoreCase("сдаться")) {
-            return session.giveUp();
-        }
-        if (command.length() != 1) {
+    public void processCommand(String command) throws UnsupportedOperationException {
+        if (command.length() != 1 && !command.equalsIgnoreCase(GIVE_UP_STRING)) {
             throw new UnsupportedOperationException();
+        } else if (command.equalsIgnoreCase(GIVE_UP_STRING)) {
+            session.giveUp();
         }
         char guess = command.charAt(0);
-        return tryGuess(guess);
+        session.guess(guess);
     }
 
-    public GuessResult handleCommand(String command) throws UnsupportedOperationException {
-        result = processCommand(command);
-        return result;
-    }
+    public void run(InputStream input, PrintStream output) {
+        Scanner scanner = new Scanner(input);
+        GameInformer informer = new GameInformer(output);
+        GuessResult result = session.getResult();
 
-    public void run() {
-        Scanner scanner = new Scanner(System.in);
-
-        gameLog("Добро пожаловать в игру 'Виселица'!");
-        gameLog("У вас есть " + MAX_ATTEMPTS + " попыток, чтобы угадать слово.");
-        gameLog("Для сдачи введите 'сдаться'");
+        informer.info("Добро пожаловать в игру 'Виселица'!");
+        informer.info("У вас есть " + result.attempt() + " попыток, чтобы угадать слово.");
+        informer.info("Для сдачи введите 'сдаться'");
 
         while (true) {
-            gameLog("Количество попыток: " + result.attempt());
-            gameLog("Введите букву: ");
+            informer.info("Количество попыток: " + result.attempt());
+            informer.info("Введите букву: ");
 
             if (scanner.hasNext()) {
-                String input = scanner.next();
+                String token = scanner.next();
 
                 try {
-                    handleCommand(input);
-                    printState(result);
+                    processCommand(token);
+                    result = session.getResult();
+                    informer.info(result);
 
                     if (result instanceof Defeat || result instanceof Win) {
                         break;
                     }
 
                 } catch (UnsupportedOperationException e) {
-                    gameLog("Пожалуйста, введите только одну букву");
+                    informer.info("Пожалуйста, введите только одну букву");
                 }
 
             }
         }
     }
 
-    private GuessResult tryGuess(char guess) {
-        return session.guess(guess);
+    public void run() {
+        run(System.in, System.out);
     }
+    /* Сделал метод с перегрузкой чтобы можно было работать с разными потоками ввода - вывода,
+    чем собственно и воспользовался в тестах :-)
+     */
 
-    private void printState(GuessResult guess) {
-        gameLog(guess.message());
-    }
+    private record GameInformer(PrintStream output) {
+
+        @SuppressWarnings("RegexpSinglelineJava")
+            public void info(String message) {
+                output.println(message);
+            }
+
+            public void info(GuessResult guess) {
+                if (guess instanceof Defeat || guess instanceof Win) {
+                    info(guess.message());
+                } else {
+                    info(guess.message() + Arrays.toString(guess.state()));
+                }
+            }
+        }
 }

@@ -1,5 +1,6 @@
 package edu.project1;
 
+import java.util.Arrays;
 import org.jetbrains.annotations.NotNull;
 
 sealed interface GuessResult {
@@ -7,24 +8,19 @@ sealed interface GuessResult {
 
     int attempt();
 
-    int maxAttempts();
-
     @NotNull String message();
 
-    record StartState(int attempt) implements GuessResult {
+    record StartState(String answer, int maxAttempt) implements GuessResult {
         @Override
         public char[] state() {
-            return new char[] {};
+            char[] word = new char[answer.length()];
+            Arrays.fill(word, '*');
+            return word;
         }
 
         @Override
         public int attempt() {
-            return attempt;
-        }
-
-        @Override
-        public int maxAttempts() {
-            return 0;
+            return maxAttempt;
         }
 
         @Override
@@ -47,11 +43,6 @@ sealed interface GuessResult {
         }
 
         @Override
-        public int maxAttempts() {
-            return 0;
-        }
-
-        @Override
         @NotNull
         public String message() {
             return message;
@@ -70,8 +61,21 @@ sealed interface GuessResult {
         }
 
         @Override
-        public int maxAttempts() {
-            return 0;
+        @NotNull
+        public String message() {
+            return message;
+        }
+    }
+
+    record SuccessfulGuess(char[] state, int attempts, @NotNull String message) implements GuessResult {
+        @Override
+        public char[] state() {
+            return state;
+        }
+
+        @Override
+        public int attempt() {
+            return attempts;
         }
 
         @Override
@@ -81,7 +85,7 @@ sealed interface GuessResult {
         }
     }
 
-    record SuccessfulGuess(char[] state, int attempt, int maxAttempts, @NotNull String message) implements GuessResult {
+    record FailedGuess(char[] state, int attempts, @NotNull String message) implements GuessResult {
         @Override
         public char[] state() {
             return state;
@@ -89,35 +93,7 @@ sealed interface GuessResult {
 
         @Override
         public int attempt() {
-            return attempt;
-        }
-
-        @Override
-        public int maxAttempts() {
-            return maxAttempts;
-        }
-
-        @Override
-        @NotNull
-        public String message() {
-            return message;
-        }
-    }
-
-    record FailedGuess(char[] state, int attempt, int maxAttempts, @NotNull String message) implements GuessResult {
-        @Override
-        public char[] state() {
-            return state;
-        }
-
-        @Override
-        public int attempt() {
-            return attempt;
-        }
-
-        @Override
-        public int maxAttempts() {
-            return maxAttempts;
+            return attempts;
         }
 
         @Override

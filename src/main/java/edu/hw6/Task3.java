@@ -1,13 +1,20 @@
 package edu.hw6;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.zip.Adler32;
 import java.util.zip.CheckedOutputStream;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Task3 {
     public static void writeToFile(String path) {
         Path filePath = Paths.get(path);
@@ -28,10 +35,6 @@ public class Task3 {
         } catch (IOException e) {
             System.err.println("Ошибка при записи" + e.getMessage());
         }
-    }
-
-    public static void main(String[] args) {
-        writeToFile("test.txt");
     }
 
 }

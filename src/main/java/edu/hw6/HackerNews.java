@@ -5,7 +5,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +12,7 @@ public class HackerNews {
 
     private static final String TOP_STORIES_URL = "https://hacker-news.firebaseio.com/v0/topstories.json";
     private static final String ITEM_URL_FORMAT = "https://hacker-news.firebaseio.com/v0/item/%d.json";
+    private static final int OK_REQUEST = 200;
 
     private final HttpClient httpClient;
 
@@ -28,7 +28,7 @@ public class HackerNews {
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() == 200) {
+            if (response.statusCode() == OK_REQUEST) {
                 String json = response.body();
                 return parseTopStoriesJson(json);
             }
@@ -51,7 +51,7 @@ public class HackerNews {
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() == 200) {
+            if (response.statusCode() == OK_REQUEST) {
                 String json = response.body();
                 return parseNewsTitleJson(json);
             }
@@ -80,15 +80,5 @@ public class HackerNews {
         } else {
             return "";
         }
-    }
-
-    public static void main(String[] args) {
-        HackerNews hackerNews = new HackerNews();
-
-        long[] topStories = hackerNews.hackerNewsTopStories();
-        System.out.println(Arrays.toString(topStories));
-
-        String newsTitle = hackerNews.news(topStories[1]);
-        System.out.println(newsTitle);
     }
 }

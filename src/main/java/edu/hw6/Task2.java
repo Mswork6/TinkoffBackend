@@ -3,9 +3,11 @@ package edu.hw6;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Task2 {
     public static void cloneFile(Path path) {
         String fileName = path.getFileName().toString();
@@ -29,9 +31,4 @@ public class Task2 {
         }
     }
 
-    public static void main(String[] args) {
-        // Пример использования функции
-        Path filePath = Paths.get("D:\\answer.txt");
-        cloneFile(filePath);
-    }
 }

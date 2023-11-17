@@ -1,6 +1,5 @@
 package edu.hw6;
 
-import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
 public class DiskMap implements Map<String, String> {
     private final Path filePath;
@@ -32,7 +32,7 @@ public class DiskMap implements Map<String, String> {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Ошибка чтения из файла");
+            System.err.println("Ошибка чтения из файла: " + e.getMessage());
         }
     }
 
@@ -44,7 +44,7 @@ public class DiskMap implements Map<String, String> {
             }
             Files.write(filePath, lines);
         } catch (IOException e) {
-            System.out.println("Ошибка записи в файл");
+            System.err.println("Ошибка записи в файл: " + e.getMessage());
         }
     }
 
@@ -112,14 +112,5 @@ public class DiskMap implements Map<String, String> {
     @Override
     public Set<Entry<String, String>> entrySet() {
         return inMemoryMap.entrySet();
-    }
-
-    public static void main(String[] args) {
-        DiskMap diskMap = new DiskMap("diskmap.txt");
-        diskMap.put("key3", "value3");
-        diskMap.put("key4", "value4");
-        System.out.println("Size: " + diskMap.size());
-        System.out.println("Value for key1: " + diskMap.get("key1"));
-        System.out.println("Contains key2? " + diskMap.containsKey("key2"));
     }
 }

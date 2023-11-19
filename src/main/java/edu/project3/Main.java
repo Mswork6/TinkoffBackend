@@ -1,7 +1,5 @@
 package edu.project3;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class Main {
@@ -10,10 +8,11 @@ public class Main {
 
         List<LogData> list = LogParser.parseLogData(url);
         LogAnalyzer analyzer = new LogAnalyzer(list);
-        String from = "2015-05-17";
-        String to = "2015-06-04";
-        LogStats stats = analyzer.collectStats();
-        System.out.println(stats.toString());
+        LogStats stats = analyzer.collectStats("data.txt");
+        LogReport report = new LogReport(stats);
+        String table = report.generateReportMd();
+        report.createMarkdownFile();
+        System.out.println(table);
 
     }
 

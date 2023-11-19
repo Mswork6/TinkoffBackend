@@ -15,9 +15,10 @@ public class LogAnalyzer {
         this.logRecords = logRecords;
     }
 
-    public LogStats collectStats() {
+    public LogStats collectStats(String fileName) {
         return new LogStats(
-            getTotalRequests(),
+            fileName,
+            Long.toString(getTotalRequests()),
             getStartDate(),
             getEndDate(),
             getAverageResponseSize(),

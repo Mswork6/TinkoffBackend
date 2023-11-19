@@ -3,7 +3,8 @@ package edu.project3;
 import java.util.Map;
 
 public record LogStats(
-    long totalRequests,
+    String fileName,
+    String totalRequests,
     String startDate,
     String endDate,
     String averageResponseSize,

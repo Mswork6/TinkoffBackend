@@ -25,6 +25,10 @@ public class LogParser {
                 // Если путь начинается с "http", предполагаем, что это URL
                 return parseLogFromURL(logPath);
             } else {
+                if (logPath.contains("*")){
+                    String path = PathParcer.parsePath(logPath);
+                    return parseLogsFromDirectory(path);
+                }
                 // Иначе считаем, что это путь к файлу(ам) на диске
                 return parseLogsFromDirectory(logPath);
             }

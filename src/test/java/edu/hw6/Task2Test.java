@@ -21,8 +21,8 @@ public class Task2Test {
         Path clonedPath = Paths.get("test — копия.txt");
 
         // Then
-        assertTrue(Files.exists(clonedPath));
-        assertTrue(Files.isRegularFile(clonedPath));
+        assertTrue(Files.exists(clonedPath.getFileName()));
+        assertTrue(Files.isRegularFile(clonedPath.getFileName()));
     }
 
 }

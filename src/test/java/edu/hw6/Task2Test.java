@@ -14,11 +14,11 @@ public class Task2Test {
     @DisplayName("Проверка корректной работы программы")
     void testCloneFileNoExistingCopies() {
         // Given
-        Path sourcePath = Paths.get("hw6Tests\\task2\\test.txt");
+        Path sourcePath = Paths.get("test.txt");
 
         // When
         Task2.cloneFile(sourcePath);
-        Path clonedPath = Paths.get("hw6Tests\\task2\\test — копия.txt");
+        Path clonedPath = Paths.get("test — копия.txt");
 
         // Then
         assertTrue(Files.exists(clonedPath));

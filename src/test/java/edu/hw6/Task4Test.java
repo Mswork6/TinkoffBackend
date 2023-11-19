@@ -15,7 +15,7 @@ class Task4Test {
     @DisplayName("Проверка работоспособности метода")
     void testFileCreationAndContent() throws IOException {
         // Given
-        String stringPath = "hw6Tests\\task3\\test.txt";
+        String stringPath = "hw6Tests\\task4\\test.txt";
         Path path = Path.of(stringPath);
 
         // When

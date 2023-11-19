@@ -9,14 +9,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LogAnalyzer {
-    private List<LogData> logRecords;
+    private final List<LogData> logRecords;
 
     public LogAnalyzer(List<LogData> logRecords) {
         this.logRecords = logRecords;
     }
 
-    public LogStats collectStats(String fromDate, String toDate) {
-        filterByDateRange(fromDate, toDate);
+    public LogStats collectStats() {
         return new LogStats(
             getTotalRequests(),
             getStartDate(),
@@ -26,20 +25,6 @@ public class LogAnalyzer {
             getResponseCodes()
         );
     }
-
-    private void filterByDateRange(String fromDate, String toDate) {
-        OffsetDateTime fromDateTime = LocalDate.parse(fromDate, DateTimeFormatter.ISO_DATE)
-            .atStartOfDay()
-            .atOffset(ZoneOffset.UTC);
-        OffsetDateTime toDateTime = LocalDate.parse(toDate, DateTimeFormatter.ISO_DATE)
-            .atTime(23,59)
-            .atOffset(ZoneOffset.UTC);
-
-        logRecords = logRecords.stream()
-            .filter(record -> !record.getTimestamp().isBefore(fromDateTime) && !record.getTimestamp().isAfter(toDateTime))
-            .collect(Collectors.toList());
-    }
-
     private String getStartDate() {
         return logRecords.stream()
             .map(LogData::getTimestamp)

@@ -1,5 +1,6 @@
 package edu.project3;
 
+
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitOption;
@@ -10,8 +11,12 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.EnumSet;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-public class PathParcer {
+@SuppressWarnings("MultipleStringLiterals")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class PathParser {
     public static String parsePath(String logPath) throws IOException {
         String[] parts = logPath.split("\\\\");
         String regex = "\\*{2}";
@@ -27,7 +32,7 @@ public class PathParcer {
             index += 1;
         }
 
-        for (int i = index; i < parts.length; i++){
+        for (int i = index; i < parts.length; i++) {
             if (parts[i].matches(regex)) {
                 continue;
             }
@@ -48,30 +53,35 @@ public class PathParcer {
     public static String findFileOrFolder(Path start, String targetName) throws IOException {
         final Path[] resultPath = {null}; // Используем массив для хранения найденного пути
 
-        Files.walkFileTree(start, EnumSet.noneOf(FileVisitOption.class), Integer.MAX_VALUE, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                if (file.getFileName().toString().equals(targetName)) {
-                    resultPath[0] = file.toAbsolutePath();
-                    return FileVisitResult.TERMINATE; // прекращаем поиск после нахождения файла
+        Files.walkFileTree(
+            start,
+            EnumSet.noneOf(FileVisitOption.class),
+            Integer.MAX_VALUE,
+            new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    if (file.getFileName().toString().equals(targetName)) {
+                        resultPath[0] = file.toAbsolutePath();
+                        return FileVisitResult.TERMINATE; // прекращаем поиск после нахождения файла
+                    }
+                    return FileVisitResult.CONTINUE;
                 }
-                return FileVisitResult.CONTINUE;
-            }
 
-            @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                if (dir.getFileName().toString().equals(targetName)) {
-                    resultPath[0] = dir.toAbsolutePath();
-                    return FileVisitResult.SKIP_SUBTREE; // пропускаем все поддиректории этой папки
+                @Override
+                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                    if (dir.getFileName().toString().equals(targetName)) {
+                        resultPath[0] = dir.toAbsolutePath();
+                        return FileVisitResult.SKIP_SUBTREE; // пропускаем все поддиректории этой папки
+                    }
+                    return FileVisitResult.CONTINUE;
                 }
-                return FileVisitResult.CONTINUE;
-            }
 
-            @Override
-            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-                return FileVisitResult.CONTINUE;
+                @Override
+                public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                    return FileVisitResult.CONTINUE;
+                }
             }
-        });
+        );
 
         return resultPath[0].toString();
     }

@@ -1,19 +1,14 @@
 package edu.project3;
 
-import java.util.List;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Main {
     public static void main(String[] args) {
-        String url = "C:\\XboxGames\\**\\datapath";
-
-        List<LogData> list = LogParser.parseLogData(url);
-        LogAnalyzer analyzer = new LogAnalyzer(list);
-        LogStats stats = analyzer.collectStats("data.txt");
-        LogReport report = new LogReport(stats);
-        String table = report.generateReportMd();
-        report.createMarkdownFile();
-        System.out.println(table);
-
+        String url = "https://raw.githubusercontent.com/elastic/examples/master"
+            + "/Common%20Data%20Formats/nginx_logs/nginx_logs";
+        StatsApp.generateLogs(url);
     }
 
 

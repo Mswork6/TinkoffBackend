@@ -1,13 +1,12 @@
 package edu.project3;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
 public class LogAnalyzer {
     private final List<LogData> logRecords;
 
@@ -26,6 +25,7 @@ public class LogAnalyzer {
             getResponseCodes()
         );
     }
+
     private String getStartDate() {
         return logRecords.stream()
             .map(LogData::getTimestamp)

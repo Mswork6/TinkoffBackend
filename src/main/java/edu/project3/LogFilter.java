@@ -33,8 +33,8 @@ public class LogFilter {
         OffsetDateTime toDateTime = castToDate(toDate);
 
         return logRecords.stream()
-            .filter(record -> !record.getTimestamp().isBefore(fromDateTime) &&
-                !record.getTimestamp().isAfter(toDateTime))
+            .filter(rec -> !rec.getTimestamp().isBefore(fromDateTime)
+                && !rec.getTimestamp().isAfter(toDateTime))
             .collect(Collectors.toList());
     }
 
@@ -42,7 +42,7 @@ public class LogFilter {
         OffsetDateTime fromDateTime = castFromDate(fromDate);
 
         return logRecords.stream()
-            .filter(record -> !record.getTimestamp().isBefore(fromDateTime))
+            .filter(rec -> !rec.getTimestamp().isBefore(fromDateTime))
             .collect(Collectors.toList());
     }
 
@@ -50,7 +50,7 @@ public class LogFilter {
         OffsetDateTime toDateTime = castToDate(toDate);
 
         return logRecords.stream()
-            .filter(record -> !record.getTimestamp().isAfter(toDateTime))
+            .filter(rec -> !rec.getTimestamp().isAfter(toDateTime))
             .collect(Collectors.toList());
     }
 
@@ -60,6 +60,7 @@ public class LogFilter {
             .atOffset(ZoneOffset.UTC);
     }
 
+    @SuppressWarnings("MagicNumber")
     private OffsetDateTime castToDate(String toDate) {
         return LocalDate.parse(toDate, DateTimeFormatter.ISO_DATE)
             .atTime(23, 59)

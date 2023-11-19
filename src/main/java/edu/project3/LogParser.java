@@ -1,5 +1,6 @@
 package edu.project3;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +18,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LogParser {
     public static List<LogData> parseLogData(String logPath) {
         try {
@@ -25,8 +29,8 @@ public class LogParser {
                 // Если путь начинается с "http", предполагаем, что это URL
                 return parseLogFromURL(logPath);
             } else {
-                if (logPath.contains("*")){
-                    String path = PathParcer.parsePath(logPath);
+                if (logPath.contains("*")) {
+                    String path = PathParser.parsePath(logPath);
                     return parseLogsFromDirectory(path);
                 }
                 // Иначе считаем, что это путь к файлу(ам) на диске
@@ -53,8 +57,7 @@ public class LogParser {
     private static Stream<LogData> tryParseLogFromFile(Path path) {
         try {
             return LogParser.parseLogFromFile(path)
-                .stream()
-                .onClose(() -> System.out.println("Файл " + path + " успешно обработан."));
+                .stream();
         } catch (IllegalArgumentException e) {
             System.err.println("Ошибка при обработке файла " + path + ": " + e.getMessage());
             return Stream.empty();
@@ -66,13 +69,14 @@ public class LogParser {
             return reader.lines()
                 .map(LogData::new)
                 .collect(Collectors.toList());
-        } catch (IOException |UncheckedIOException e) {
+        } catch (IOException | UncheckedIOException e) {
             System.err.println("Ошибка при чтении файла " + filePath + ": " + e.getMessage());
             return Collections.emptyList();
         }
     }
 
-    private static List<LogData> parseLogFromURL(String urlString) throws IOException, InterruptedException, URISyntaxException {
+    private static List<LogData> parseLogFromURL(String urlString) throws IOException, InterruptedException,
+        URISyntaxException {
         URI uri = new URI(urlString);
         try (HttpClient httpClient = HttpClient.newHttpClient()) {
             HttpRequest request = HttpRequest.newBuilder()

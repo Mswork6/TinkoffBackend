@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+@SuppressWarnings("MagicNumber")
 public class LogData {
     private static final String LOG_PATTERN = "^(\\S+) - (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(.+?)\" "
         + "(\\d{3}) (\\d+) \"([^\"]+)\" \"([^\"]+)\"$";

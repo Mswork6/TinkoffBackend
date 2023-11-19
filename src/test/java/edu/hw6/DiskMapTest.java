@@ -95,18 +95,18 @@ public class DiskMapTest {
         assertNull(diskMap.get("key2"));
     }
 
-//    @Test
-//    @DisplayName("Проверка чтения элементов из файла")
-//    void testReadData() {
-//        // given
-//        DiskMap diskMap = new DiskMap("src\\test\\resources\\test_diskmap5.txt");
-//
-//        // when
-//
-//        // then
-//        assertEquals(3 ,diskMap.size());
-//        assertEquals("value1", diskMap.get("test1"));
-//        assertEquals("value2", diskMap.get("test2"));
-//        assertEquals("value3", diskMap.get("test3"));
-//    }
+    @Test
+    @DisplayName("Проверка чтения элементов из файла")
+    void testReadData() {
+        // given
+        DiskMap diskMap = new DiskMap("src/test/resources/test_diskmap5.txt");
+
+        // when
+
+        // then
+        assertEquals(3 ,diskMap.size());
+        assertEquals("value1", diskMap.get("test1"));
+        assertEquals("value2", diskMap.get("test2"));
+        assertEquals("value3", diskMap.get("test3"));
+    }
 }

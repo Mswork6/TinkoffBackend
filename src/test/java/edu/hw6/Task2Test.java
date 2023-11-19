@@ -14,15 +14,15 @@ public class Task2Test {
     @DisplayName("Проверка корректной работы программы")
     void testCloneFileNoExistingCopies() {
         // Given
-        Path sourcePath = Paths.get("test.txt");
+        Path sourcePath = Paths.get("src/test/resources/test.txt");
 
         // When
         Task2.cloneFile(sourcePath);
-        Path clonedPath = Paths.get("test — копия.txt");
+        Path clonedPath = Paths.get("src/test/resources/test — копия.txt");
 
         // Then
-        assertTrue(Files.exists(clonedPath.getFileName()));
-        assertTrue(Files.isRegularFile(clonedPath.getFileName()));
+        assertTrue(Files.exists(clonedPath));
+        assertTrue(Files.isRegularFile(clonedPath));
     }
 
 }

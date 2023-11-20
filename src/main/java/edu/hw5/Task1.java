@@ -16,8 +16,8 @@ public class Task1 {
     private final static String DATE_FORMAT = "%sT%s:00";
 
     @SuppressWarnings("MagicNumber")
-    public static String getTimeDifference(String[] array) {
-        int total = 0;
+    public static String getAverageVisitingTime(String[] array) {
+        Duration totalDuration = Duration.ZERO;
         int counter = 0;
 
         for (String string : array) {
@@ -30,20 +30,22 @@ public class Task1 {
                 LocalDateTime start = LocalDateTime.parse(firstDate);
                 LocalDateTime end = LocalDateTime.parse(secondDate);
 
-                int difference = (int) Math.abs(Duration.between(start, end).toMinutes());
-                total += difference;
+
+                Duration interval = Duration.between(start, end);
+                totalDuration = totalDuration.plus(interval);
                 counter++;
             }
         }
-        int average = 0;
+        long average = 0;
         try {
-            average = total / counter;
+            average = Math.abs(totalDuration.dividedBy(counter).toMinutes());
         } catch (ArithmeticException ignored) {
         }
 
-        int hours = average / MINUTES_IN_HOUR;
-        int minutes = average % MINUTES_IN_HOUR;
+        long hours = average / MINUTES_IN_HOUR;
+        long minutes = average % MINUTES_IN_HOUR;
 
         return String.format("%dч %dм", hours, minutes);
     }
+
 }

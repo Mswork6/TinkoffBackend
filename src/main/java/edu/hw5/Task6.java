@@ -7,14 +7,13 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Task6 {
-    public static boolean isSubsequence(String s, String t) {
+    public static boolean isSubsequence(String sequenceString, String workingString) {
         StringBuilder pattern = new StringBuilder(".*");
-        for (int i = 0; i < s.length(); i++) {
-            pattern.append(s.charAt(i));
-            pattern.append(".*");
+        for (int i = 0; i < sequenceString.length(); i++) {
+            pattern.append("\\Q").append(sequenceString.charAt(i)).append("\\E.*");
         }
         Pattern regexPattern = Pattern.compile(pattern.toString());
-        Matcher matcher = regexPattern.matcher(t);
+        Matcher matcher = regexPattern.matcher(workingString);
         return matcher.matches();
     }
 }

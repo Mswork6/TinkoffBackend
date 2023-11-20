@@ -2,7 +2,7 @@ package edu.hw5;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static edu.hw5.Task1.getTimeDifference;
+import static edu.hw5.Task1.getAverageVisitingTime;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task1Test {
@@ -14,7 +14,7 @@ public class Task1Test {
         "2022-04-01, 21:30 - 2022-04-02, 01:20"};
 
         // when
-        String result = getTimeDifference(time);
+        String result = getAverageVisitingTime(time);
 
         // then
         assertThat(result).isEqualTo("3ч 40м");
@@ -29,7 +29,7 @@ public class Task1Test {
             "2022-04-01, 21:30 - 2022-04-02, 01:20"};
 
         // when
-        String result = getTimeDifference(time);
+        String result = getAverageVisitingTime(time);
 
         // then
         assertThat(result).isEqualTo("3ч 40м");
@@ -44,7 +44,7 @@ public class Task1Test {
             "2022-04-01 21:30 - 2022-04-02 01:20"};
 
         // when
-        String result = getTimeDifference(time);
+        String result = getAverageVisitingTime(time);
         System.out.println(result);
 
         // then
@@ -59,7 +59,7 @@ public class Task1Test {
             "2022-04-02, 01:20 - 2022-04-01, 21:30"};
 
         // when
-        String result = getTimeDifference(time);
+        String result = getAverageVisitingTime(time);
 
         // then
         assertThat(result).isEqualTo("3ч 40м");

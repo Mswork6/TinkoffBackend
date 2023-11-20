@@ -23,13 +23,27 @@ public class Task6Test {
 
     @Test
     @DisplayName("Обработка ситуации, где s не является подпоследовательностью t")
-    void checkCorrectPass() {
+    void checkIncorrectVariant() {
         // given
         String s = "abc";
         String t = "wqeruydjsafhalkj";
 
         // when
         boolean answer = isSubsequence(s, t);
+
+        // then
+        assertFalse(answer);
+    }
+
+    @Test
+    @DisplayName("Обработка ситуации, с ^ и test")
+    void checkDifficultTest() {
+        // given
+        String sequenceString = "^";
+        String workingString = "test";
+
+        // when
+        boolean answer = isSubsequence(sequenceString, workingString);
 
         // then
         assertFalse(answer);

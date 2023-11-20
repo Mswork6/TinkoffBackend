@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Task7 {
     private static final String FIRST_REGEX = "^[01]{2}0[01]*$";
-    private static final String SECOND_REGEX = "^([01]).*(?=\\1$)[01]*$";
+    private static final String SECOND_REGEX = "^([01])[01]*(?=\\1$)[01]*$";
     private static final String THIRD_REGEX = "^[01]{1,3}$";
 
     public static boolean checkFirstRegex(String string) {

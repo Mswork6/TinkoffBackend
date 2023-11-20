@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import lombok.experimental.UtilityClass;
-
 import static edu.hw4.Animal.Type;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 @UtilityClass
 public final class Main {
@@ -57,6 +57,9 @@ public final class Main {
      * Каких животных больше: самцов или самок
      */
     public static Animal.Sex animalSexCount(List<Animal> list) {
+        if (list.isEmpty()) {
+            return null;
+        }
         return list.stream()
                 .collect(groupingBy(Animal::sex, counting()))
                 .entrySet()
@@ -67,7 +70,7 @@ public final class Main {
     /**
      * Самое тяжелое животное каждого вида
      */
-    public static Map<Animal.Type, Animal> heaviestAnimal(List<Animal> list) {
+    public static Map<Animal.Type, Animal> heaviestEveryTypeAnimal(List<Animal> list) {
         return list.stream()
                 .collect(groupingBy(Animal::type,
                         collectingAndThen(
@@ -94,7 +97,7 @@ public final class Main {
     /**
      * Самое тяжелое животное среди животных ниже k см
      */
-    public static Optional<Animal> heaviestHeightAnimal(List<Animal> list, int number) {
+    public static Optional<Animal> heaviestAnimalLowerThan(List<Animal> list, int number) {
         return list.stream()
                 .filter(animal -> animal.height() < number)
                 .max(Comparator.comparing(Animal::weight));
@@ -122,7 +125,7 @@ public final class Main {
      * Список животных, которые могут укусить (bites == null или true) и рост которых превышает 100 см
      */
     @SuppressWarnings("MagicNumber")
-    public static List<Animal> animalsBite(List<Animal> list) {
+    public static List<Animal> animalsThatCanBite(List<Animal> list) {
         return list.stream()
                 .filter(animal -> (animal.bites() == null || animal.bites()) && animal.height() > 100)
                 .toList();
@@ -140,7 +143,7 @@ public final class Main {
     /**
      * Список животных, имена которых состоят из более чем двух слов
      */
-    public static List<Animal> twoNameAnimal(List<Animal> list) {
+    public static List<Animal> twoNameOrMoreAnimal(List<Animal> list) {
         return list.stream()
                 .filter(animal -> animal.name().contains(" "))
                 .toList();
@@ -149,7 +152,7 @@ public final class Main {
     /**
      * Есть ли в списке собака ростом более k см
      */
-    public static Boolean hasDogHeight(List<Animal> list, int height) {
+    public static Boolean hasDogHeightMoreThan(List<Animal> list, int height) {
         return list.stream()
                 .anyMatch(animal -> animal.type() == Type.DOG && animal.height() > height);
     }
@@ -157,7 +160,7 @@ public final class Main {
     /**
      * Найти суммарный вес животных каждого вида, которым от k до l лет
      */
-    public static Map<Animal.Type, Integer> animalWeightSum(List<Animal> list, int min, int max) {
+    public static Map<Animal.Type, Integer> animalEveryTypeWeightSum(List<Animal> list, int min, int max) {
         return list.stream()
                 .filter(animal -> animal.age() > Math.min(min, max) && animal.age() < Math.max(min, max))
                 .collect(groupingBy(Animal::type, Collectors.summingInt(Animal::weight)));
@@ -166,7 +169,7 @@ public final class Main {
     /**
      * Список животных, отсортированный по виду, затем по полу, затем по имени
      */
-    public static List<Animal> animalTypeList(List<Animal> list) {
+    public static List<Animal> animalSortedListByTypeSexName(List<Animal> list) {
         return list.stream()
                 .sorted(
                         Comparator.comparing(Animal::type)
@@ -200,8 +203,10 @@ public final class Main {
             return false;
         }
 
+        double spiderTotal = (double) spiderBites / spiderAll;
+        double dogTotal = (double) dogBites / dogAll;
 
-        return spiderBites / spiderAll > dogBites / dogAll;
+        return spiderTotal > dogTotal;
     }
 
     /**
@@ -218,7 +223,7 @@ public final class Main {
     /**
      * Животные, в записях о которых есть ошибки: вернуть имя и список ошибок
      */
-    public static Map<String, Set<AnimalValidator.ValidationError>> animalErrorCount(List<Animal> list) {
+    public static Map<String, Set<AnimalValidator.ValidationError>> animalWithErrors(List<Animal> list) {
         return list.stream()
                 .collect(Collectors.toMap(
                         Animal::name,
@@ -237,7 +242,7 @@ public final class Main {
      * Животные, в записях о которых есть ошибки: вернуть имя и
      * названия полей с ошибками, объединенные в строку
      */
-    public static Map<String, String> animalErrorList(List<Animal> list) {
+    public static Map<String, String> animalWithErrorsAsString(List<Animal> list) {
         return list.stream()
                 .collect(Collectors.toMap(
                         Animal::name,

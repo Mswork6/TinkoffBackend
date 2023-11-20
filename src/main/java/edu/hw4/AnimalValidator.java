@@ -3,14 +3,11 @@ package edu.hw4;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AnimalValidator {
-    public record ValidationError(String fieldName, String error){
-        @Override
-        public String toString(){
-            return fieldName + " : " + error;
-        }
-    }
 
     public static Set<ValidationError> validate(Animal animal) {
         Set<ValidationError> errors = new HashSet<>();
@@ -34,7 +31,11 @@ public class AnimalValidator {
         return errors;
     }
 
-
-
+    public record ValidationError(String fieldName, String error) {
+        @Override
+        public String toString() {
+            return fieldName + " : " + error;
+        }
+    }
 
 }

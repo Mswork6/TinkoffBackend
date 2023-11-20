@@ -74,6 +74,7 @@ public class MainTest {
 
         // then
         assertEquals(result.size(), k);
+        assertEquals(result.get(0).weight(), 40);
         for (int i = 0; i < result.size() - 1; i++) {
             assertTrue(result.get(i).weight() >= result.get(i + 1).weight());
         }
@@ -111,12 +112,24 @@ public class MainTest {
     @DisplayName("Проверка на сравнение количества животных")
     public void testTask5() {
         // given
+        List<Animal> list1 = new ArrayList<>();
+        List<Animal> list2 = new ArrayList<>(List.of(
+            new Animal("Linda", Type.CAT, Sex.F, 5, 40, 8, false),
+            new Animal("Lola", Type.DOG, Sex.F, 5, 40, 8, false),
+            new Animal("Wolfgang", Type.DOG, Sex.M, 5, 40, 8, false),
+            new Animal("Amadeus", Type.SPIDER, Sex.M, 5, 40, 8, false),
+            new Animal("Leyla", Type.CAT, Sex.F, 5, 40, 8, false)
+        ));
 
         // when
         Animal.Sex result = Main.animalSexCount(animals);
+        Animal.Sex result1 = Main.animalSexCount(list1);
+        Animal.Sex result2 = Main.animalSexCount(list2);
 
         // then
         assertEquals(result, Animal.Sex.M);
+        assertNull(result1);
+        assertEquals(result2, Animal.Sex.F);
     }
 
     @Test
@@ -125,7 +138,7 @@ public class MainTest {
         // given
 
         // when
-        Map<Animal.Type, Animal> result = Main.heaviestAnimal(animals);
+        Map<Animal.Type, Animal> result = Main.heaviestEveryTypeAnimal(animals);
 
         // then
         assertEquals(result.get(Animal.Type.CAT).name(), "Tiger");
@@ -156,7 +169,7 @@ public class MainTest {
         int k = 50;
 
         // when
-        Optional<Animal> result = Main.heaviestHeightAnimal(animals, k);
+        Optional<Animal> result = Main.heaviestAnimalLowerThan(animals, k);
 
         // then
         assertTrue(result.isPresent());
@@ -195,9 +208,10 @@ public class MainTest {
         // given
 
         // when
-        List<Animal> result = Main.animalsBite(animals);
+        List<Animal> result = Main.animalsThatCanBite(animals);
 
         // then
+        assertEquals(result.size(), 2);
         for (Animal animal : result) {
             assertTrue((animal.bites() == null || animal.bites()) && animal.height() > 100);
         }
@@ -221,9 +235,10 @@ public class MainTest {
         // given
 
         // when
-        List<Animal> result = Main.twoNameAnimal(animals);
+        List<Animal> result = Main.twoNameOrMoreAnimal(animals);
 
         // then
+        assertEquals(result.size(), 1);
         for (Animal animal : result) {
             assertTrue(animal.name().split(" ").length > 2);
         }
@@ -233,30 +248,43 @@ public class MainTest {
     @DisplayName("Проверка наличия собаки ростом более k см")
     public void testTask14() {
         // given
-        int height = 15;
+        int trueHeight = 15;
+        int falseHeight = 200;
 
         // when
-        boolean result = Main.hasDogHeight(animals, height);
+        boolean result = Main.hasDogHeightMoreThan(animals, trueHeight);
+        boolean result1 = Main.hasDogHeightMoreThan(animals, falseHeight);
 
         // then
         assertTrue(result);
+        assertFalse(result1);
     }
 
     @Test
-    @DisplayName("Обработка пустой строки")
+    @DisplayName("Проверка нахождения суммарного веса животных каждого вида "
+        + "от k до l лет")
     public void testTask15() {
         // given
         int minAge = 2;
         int maxAge = 5;
+        List<Animal> emptyList = new ArrayList<>();
 
         // when
-        Map<Animal.Type, Integer> result = Main.animalWeightSum(animals, minAge, maxAge);
+        Map<Animal.Type, Integer> result = Main.animalEveryTypeWeightSum(animals, minAge, maxAge);
+        Map<Animal.Type, Integer> emptyResult = Main.animalEveryTypeWeightSum(emptyList, minAge, maxAge);
 
         // then
-        assertEquals(result.get(Animal.Type.CAT), 13);
-        assertEquals(result.get(Animal.Type.DOG), 60);
-        assertEquals(result.get(Animal.Type.BIRD), 5);
-        assertEquals(result.get(Animal.Type.SPIDER), 2);
+        assertEquals(result.get(Type.CAT), 13);
+        assertEquals(result.get(Type.DOG), 60);
+        assertEquals(result.get(Type.BIRD), 5);
+        assertEquals(result.get(Type.SPIDER), 2);
+        assertNull(result.get(Type.FISH));
+
+        assertNull(emptyResult.get(Type.CAT));
+        assertNull(emptyResult.get(Type.DOG));
+        assertNull(emptyResult.get(Type.BIRD));
+        assertNull(emptyResult.get(Type.SPIDER));
+        assertNull(emptyResult.get(Type.FISH));
     }
 
     @Test
@@ -265,7 +293,7 @@ public class MainTest {
         // given
 
         // when
-        List<Animal> result = Main.animalTypeList(animals);
+        List<Animal> result = Main.animalSortedListByTypeSexName(animals);
 
         // then
         for (int i = 0; i < result.size() - 1; i++) {
@@ -290,13 +318,40 @@ public class MainTest {
     @DisplayName("Проверка, что пауки кусаются чаще, чем собаки")
     public void testTask17() {
         // given
+        List<Animal> trueList = new ArrayList<>(List.of(
+            new Animal("Wolfgang", Type.DOG, Sex.M, 5, 40, 8, false),
+            new Animal("Hans", Type.DOG, Sex.F, 5, 40, 8, true),
+            new Animal("Jurgen", Type.DOG, Sex.M, 5, 40, 8, false),
+            new Animal("Mathias", Type.SPIDER, Sex.M, 5, 2, 8, true),
+            new Animal("Jorg", Type.SPIDER, Sex.F, 5, 2, 8, true),
+            new Animal("Jens", Type.SPIDER, Sex.F, 5, 2, 8, false)
+        ));
+
+        List<Animal> noDogsList = new ArrayList<>(List.of(
+            new Animal("Mathias", Type.SPIDER, Sex.M, 5, 2, 8, true),
+            new Animal("Jorg", Type.SPIDER, Sex.F, 5, 2, 8, false),
+            new Animal("Jens", Type.SPIDER, Sex.F, 5, 2, 8, false)
+        ));
+
+        List<Animal> noSpidersList = new ArrayList<>(List.of(
+            new Animal("Wolfgang", Type.DOG, Sex.M, 5, 40, 8, true),
+            new Animal("Hans", Type.DOG, Sex.F, 5, 40, 8, true),
+            new Animal("Jurgen", Type.DOG, Sex.M, 5, 40, 8, false)
+        ));
 
         // when
         boolean result = Main.spiderBitesMoreThanDogs(animals);
+        boolean result1 = Main.spiderBitesMoreThanDogs(trueList);
+        boolean result2 = Main.spiderBitesMoreThanDogs(noDogsList);
+        boolean result3 = Main.spiderBitesMoreThanDogs(noSpidersList);
 
         // then
 
         assertFalse(result);
+        assertTrue(result1);
+        assertFalse(result2);
+        assertFalse(result3);
+
     }
 
     @Test
@@ -321,11 +376,19 @@ public class MainTest {
         // given
 
         // when
-        Map<String, Set<AnimalValidator.ValidationError>> result = Main.animalErrorCount(animals);
+        Map<String, Set<AnimalValidator.ValidationError>> result = Main.animalWithErrors(animals);
         System.out.println(result.toString());
 
         // then
         assertEquals(result.size(), 6);
+        assertEquals(result.get("Spinner").toString(), "[weight : Вес задан некорректно]");
+        assertEquals(result.get("Arachnid").toString(), "[weight : Вес задан некорректно]");
+        assertEquals(result.get("Goldie").toString(), "[weight : Вес задан некорректно]");
+        assertEquals(result.get("Dory Tina Lina").toString(), "[weight : Вес задан некорректно]");
+        assertEquals(result.get("Nemo").toString(), "[weight : Вес задан некорректно]");
+        assertEquals(result.get("Spiderman").toString(), "[weight : Вес задан некорректно, "
+            + "height : Рост задан некорректно, age : Возраст задан некорректно]");
+
     }
 
     @Test
@@ -334,10 +397,17 @@ public class MainTest {
         // given
 
         // when
-        Map<String, String> result = Main.animalErrorList(animals);
+        Map<String, String> result = Main.animalWithErrorsAsString(animals);
         System.out.println(result.toString());
 
         // then
         assertEquals(result.size(), 6);
+        assertEquals(result.get("Spinner"), "[weight : Вес задан некорректно]");
+        assertEquals(result.get("Arachnid"), "[weight : Вес задан некорректно]");
+        assertEquals(result.get("Goldie"), "[weight : Вес задан некорректно]");
+        assertEquals(result.get("Dory Tina Lina"), "[weight : Вес задан некорректно]");
+        assertEquals(result.get("Nemo"), "[weight : Вес задан некорректно]");
+        assertEquals(result.get("Spiderman"), "[weight : Вес задан некорректно, "
+            + "height : Рост задан некорректно, age : Возраст задан некорректно]");
     }
 }

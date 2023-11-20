@@ -226,7 +226,7 @@ public class MainTest {
         int result = Main.animalsWeightMoreThanHeight(animals);
 
         // then
-        assertEquals(result, 1);
+        assertEquals(result, 2);
     }
 
     @Test

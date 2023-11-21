@@ -38,7 +38,7 @@ public class MazeRenderer implements Renderer {
             for (int col = 0; col < maze.width(); col++) {
                 boolean verticalWall = maze.hasVerticalWall(row, col);
                 boolean horizontalWall = maze.hasHorizontalWall(row, col);
-                if (path.contains(new Coordinate(row, col))) {
+                if (path.contains(Coordinate.of(row, col))) {
                     arrayRow.append(renderWithPath(verticalWall, horizontalWall));
                 } else {
                     arrayRow.append(renderNoPath(verticalWall, horizontalWall));
@@ -57,9 +57,8 @@ public class MazeRenderer implements Renderer {
             return ("   |");
         } else if (horizontalWall) {
             return ("____");
-        } else {
-            return ("    ");
         }
+        return ("    ");
     }
 
     private String renderWithPath(boolean verticalWall, boolean horizontalWall) {

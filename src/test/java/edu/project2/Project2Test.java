@@ -102,7 +102,7 @@ public class Project2Test {
     }
 
     @Test
-    @DisplayName("Проверка корректных данных при поиске пути")
+    @DisplayName("Проверка некорректных данных при поиске пути")
     void checkIncorrectInputGenerate() {
         // given
 
@@ -113,7 +113,7 @@ public class Project2Test {
     }
 
     @Test
-    @DisplayName("Проверка корректных данных при генерации лабиринта")
+    @DisplayName("Проверка некорректных данных при генерации лабиринта")
     void checkIncorrectInputPath() {
         // given
 

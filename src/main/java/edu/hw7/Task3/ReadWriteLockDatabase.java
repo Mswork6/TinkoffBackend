@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class ReadWriteLockDatabase implements PersonDatabase{
+public class ReadWriteLockDatabase implements PersonDatabase {
     private final Map<Integer, Person> database = new HashMap<>();
     private final Map<String, List<Person>> nameIndex = new HashMap<>();
     private final Map<String, List<Person>> addressIndex = new HashMap<>();
@@ -61,7 +61,7 @@ public class ReadWriteLockDatabase implements PersonDatabase{
     }
 
     @Override
-    public  List<Person> findByAddress(String address) {
+    public List<Person> findByAddress(String address) {
         lock.readLock().lock();
         try {
             return addressIndex.getOrDefault(address, new ArrayList<>());
@@ -72,7 +72,7 @@ public class ReadWriteLockDatabase implements PersonDatabase{
     }
 
     @Override
-    public  List<Person> findByPhone(String phone) {
+    public List<Person> findByPhone(String phone) {
         lock.readLock().lock();
         try {
             return phoneIndex.getOrDefault(phone, new ArrayList<>());
@@ -81,7 +81,6 @@ public class ReadWriteLockDatabase implements PersonDatabase{
         }
 
     }
-
 
     private void addToIndex(Map<String, List<Person>> index, String key, Person person) {
         index.computeIfAbsent(key, k -> new ArrayList<>()).add(person);

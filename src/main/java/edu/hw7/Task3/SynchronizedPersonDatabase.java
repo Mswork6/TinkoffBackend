@@ -28,8 +28,7 @@ public class SynchronizedPersonDatabase implements PersonDatabase {
         Person person = database.get(id);
         if (person == null) {
             System.err.println("Человек с таким id не обнаружен");
-        }
-        else {
+        } else {
             database.remove(id);
             removeFromIndex(nameIndex, person.name(), person);
             removeFromIndex(addressIndex, person.address(), person);
@@ -51,7 +50,6 @@ public class SynchronizedPersonDatabase implements PersonDatabase {
     public synchronized List<Person> findByPhone(String phone) {
         return phoneIndex.getOrDefault(phone, new ArrayList<>());
     }
-
 
     private void addToIndex(Map<String, List<Person>> index, String key, Person person) {
         index.computeIfAbsent(key, k -> new ArrayList<>()).add(person);

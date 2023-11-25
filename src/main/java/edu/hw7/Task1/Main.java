@@ -1,5 +1,9 @@
 package edu.hw7.Task1;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Main {
     public static int increaseCounter(int threadsAmount) throws InterruptedException {
         Counter counter = new Counter();

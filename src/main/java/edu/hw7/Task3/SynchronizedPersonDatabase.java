@@ -37,7 +37,7 @@ public class SynchronizedPersonDatabase implements PersonDatabase {
     }
 
     @Override
-    public List<Person> findByName(String name) {
+    public synchronized List<Person> findByName(String name) {
         return nameIndex.getOrDefault(name, new ArrayList<>());
     }
 

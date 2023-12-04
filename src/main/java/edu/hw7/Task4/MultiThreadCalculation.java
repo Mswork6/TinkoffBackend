@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class MultiThreadCalculation {
 
     @SuppressWarnings("MagicNumber")
-    public static double calculateMultiThreadPi(int threadAmount, int iterations) {
+    public static double calculateMultiThreadPi(int threadAmount, int iterations) throws InterruptedException {
         AtomicInteger counter = new AtomicInteger(0);
         ThreadCounter[] threadArray = new ThreadCounter[threadAmount];
 
@@ -18,11 +18,7 @@ public class MultiThreadCalculation {
         }
 
         for (int i = 0; i < threadAmount; i++) {
-            try {
-                threadArray[i].join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            threadArray[i].join();
         }
 
         return 4 * ((double) counter.get() / iterations);

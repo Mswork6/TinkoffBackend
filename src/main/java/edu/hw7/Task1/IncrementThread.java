@@ -1,17 +1,20 @@
 package edu.hw7.Task1;
 
-public class IncrementThread extends Thread {
-    private final static int ITERATION_AMOUNT = 1000;
-    private final Counter counter;
+import java.util.concurrent.atomic.AtomicInteger;
 
-    public IncrementThread(Counter counter) {
+public class IncrementThread extends Thread {
+    private final int iterationAmount;
+    private final AtomicInteger counter;
+
+    public IncrementThread(AtomicInteger counter, int iterationAmount) {
         this.counter = counter;
+        this.iterationAmount = iterationAmount;
     }
 
     @Override
     public void run() {
-        for (int i = 0; i < ITERATION_AMOUNT; i++) {
-            counter.increment();
+        for (int i = 0; i < iterationAmount; i++) {
+            counter.incrementAndGet();
         }
     }
 }

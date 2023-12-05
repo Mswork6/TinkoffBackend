@@ -19,8 +19,8 @@ public class AbstractFilterTest {
         Path dir = Paths.get("src/test/resources/");
         List<Path> filteredPaths = new ArrayList<>();
 
-        AbstractFilter filter = AbstractFilter.regularFile
-            .and(AbstractFilter.writable)
+        AbstractFilter filter = AbstractFilter.REGULAR_FILE
+            .and(AbstractFilter.WRITABLE)
             .and(AbstractFilter.magicNumber((byte) 0x89, (byte) 'P', (byte) 'N', (byte) 'G'))
             .and(AbstractFilter.largerThan(100_000))
             .and(AbstractFilter.globMatches("*.png"))
@@ -34,11 +34,16 @@ public class AbstractFilterTest {
         }
 
         // then
-        assertEquals(filteredPaths.size(), 4);
-        assertEquals(filteredPaths.get(0).toString(), "src\\test\\resources\\Cyberpunk-image.png");
-        assertEquals(filteredPaths.get(1).toString(), "src\\test\\resources\\Cyberpunk-image1.png");
-        assertEquals(filteredPaths.get(2).toString(), "src\\test\\resources\\Cyberpunk-image2.png");
-        assertEquals(filteredPaths.get(3).toString(), "src\\test\\resources\\Cyberpunk-image3.png");
+        assertEquals(filteredPaths.size(), 8);
+        assertEquals(filteredPaths.get(0).toString(), "src/test/resources/Cyberpunk-image.png");
+        assertEquals(filteredPaths.get(1).toString(), "src/test/resources/Cyberpunk-image1.png");
+        assertEquals(filteredPaths.get(2).toString(), "src/test/resources/Cyberpunk-image2.png");
+        assertEquals(filteredPaths.get(3).toString(), "src/test/resources/Cyberpunk-image3.png");
+        assertEquals(filteredPaths.get(4).toString(), "src/test/resources/Cyberpunk-image4.png");
+        assertEquals(filteredPaths.get(5).toString(), "src/test/resources/Cyberpunk-image5.png");
+        assertEquals(filteredPaths.get(6).toString(), "photomode_25072023_211629");
+        assertEquals(filteredPaths.get(7).toString(), "photomode_25072023_211822");
+
     }
 
     @Test
@@ -48,8 +53,8 @@ public class AbstractFilterTest {
         Path dir = Paths.get("src/test/resources/");
         List<Path> filteredPaths = new ArrayList<>();
 
-        AbstractFilter filter = AbstractFilter.regularFile
-            .and(AbstractFilter.writable)
+        AbstractFilter filter = AbstractFilter.REGULAR_FILE
+            .and(AbstractFilter.WRITABLE)
             .and(AbstractFilter.magicNumber((byte) 0x89, (byte) 'L', (byte) 'M', (byte) 'B'))
             .and(AbstractFilter.largerThan(10_000))
             .and(AbstractFilter.globMatches("*.png"))
@@ -73,8 +78,8 @@ public class AbstractFilterTest {
         Path dir = Paths.get("src/test/resources/");
         List<Path> filteredPaths = new ArrayList<>();
 
-        AbstractFilter filter = AbstractFilter.regularFile
-            .and(AbstractFilter.readable)
+        AbstractFilter filter = AbstractFilter.REGULAR_FILE
+            .and(AbstractFilter.READABLE)
             .and(AbstractFilter.largerThan(-1))
             .and(AbstractFilter.globMatches("*.txt"))
             .and(AbstractFilter.regexContains("test_diskmap"));
@@ -88,12 +93,12 @@ public class AbstractFilterTest {
 
         // then
         assertEquals(filteredPaths.size(), 6);
-        assertEquals(filteredPaths.get(0).toString(), "src\\test\\resources\\test_diskmap.txt");
-        assertEquals(filteredPaths.get(1).toString(), "src\\test\\resources\\test_diskmap1.txt");
-        assertEquals(filteredPaths.get(2).toString(), "src\\test\\resources\\test_diskmap2.txt");
-        assertEquals(filteredPaths.get(3).toString(), "src\\test\\resources\\test_diskmap3.txt");
-        assertEquals(filteredPaths.get(4).toString(), "src\\test\\resources\\test_diskmap4.txt");
-        assertEquals(filteredPaths.get(5).toString(), "src\\test\\resources\\test_diskmap5.txt");
+        assertEquals(filteredPaths.get(0).toString(), "src/test/resources/test_diskmap5.txt");
+        assertEquals(filteredPaths.get(1).toString(), "src/test/resources/test_diskmap1.txt");
+        assertEquals(filteredPaths.get(2).toString(), "src/test/resources/test_diskmap2.txt");
+        assertEquals(filteredPaths.get(3).toString(), "src/test/resources/test_diskmap3.txt");
+        assertEquals(filteredPaths.get(4).toString(), "src/test/resources/test_diskmap4.txt");
+        assertEquals(filteredPaths.get(5).toString(), "src/test/resources/test_diskmap1.txt");
 
     }
 }

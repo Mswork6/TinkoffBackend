@@ -20,7 +20,7 @@ public class HackerNews {
         this.httpClient = HttpClient.newHttpClient();
     }
 
-    public long[] hackerNewsTopStories(String url) {
+    public long[] hackerNewsTopStories(String url) throws Exception {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -33,17 +33,17 @@ public class HackerNews {
                 return parseTopStoriesJson(json);
             }
         } catch (IOException | InterruptedException e) {
-            return new long[0];
+            throw new Exception(e);
         }
 
         return new long[0];
     }
 
-    public long[] hackerNewsTopStories() {
+    public long[] hackerNewsTopStories() throws Exception {
         return hackerNewsTopStories(TOP_STORIES_URL);
     }
 
-    public String news(long id) {
+    public String news(long id) throws Exception {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(String.format(ITEM_URL_FORMAT, id)))
@@ -56,7 +56,7 @@ public class HackerNews {
                 return parseNewsTitleJson(json);
             }
         } catch (IOException | InterruptedException e) {
-            return "";
+            throw new Exception(e);
         }
 
         return "";

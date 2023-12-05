@@ -19,7 +19,7 @@ class Task4Test {
         Path path = Path.of(stringPath);
 
         // When
-        Task3.writeToFile(stringPath);
+        Task4.writeToFile(stringPath);
 
         // Then
         assertTrue(Files.exists(path));

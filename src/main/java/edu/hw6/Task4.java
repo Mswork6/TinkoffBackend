@@ -15,7 +15,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Task3 {
+public class Task4 {
     public static void writeToFile(String path) {
         Path filePath = Paths.get(path);
 

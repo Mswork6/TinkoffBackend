@@ -32,12 +32,10 @@ public class PortScannerTest {
 
         // then
         assertEquals(result.size(), 6);
-        assertEquals(result.get(0), "Port 135: TCP - In use by EPMAP");
-        assertEquals(result.get(1), "Port 136: TCP - In use by unknown service");
-        assertEquals(result.get(2), "Port 137: UDP - In use by NetBIOS Name Service");
-        assertEquals(result.get(3), "Port 138: UDP - In use by NetBIOS Datagram Service");
-        assertEquals(result.get(4), "Port 139: TCP - In use by NetBIOS Session Service");
-        assertEquals(result.get(5), "Port 140: TCP/UDP - Available");
+        /* Я изначально проверял какие порты к чему подключены, но я так понял что идея лажа,
+        потому что когда залил на гитхаб там значения другие, поэтому просто проверяем, что все
+        порты были просканированы
+         */
 
     }
 }

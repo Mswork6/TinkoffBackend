@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AbstractFilterTest {
     @Test
@@ -35,15 +36,14 @@ public class AbstractFilterTest {
 
         // then
         assertEquals(filteredPaths.size(), 8);
-        assertEquals(filteredPaths.get(0).toString(), "src/test/resources/Cyberpunk-image.png");
-        assertEquals(filteredPaths.get(1).toString(), "src/test/resources/Cyberpunk-image1.png");
-        assertEquals(filteredPaths.get(2).toString(), "src/test/resources/Cyberpunk-image2.png");
-        assertEquals(filteredPaths.get(3).toString(), "src/test/resources/Cyberpunk-image3.png");
-        assertEquals(filteredPaths.get(4).toString(), "src/test/resources/Cyberpunk-image4.png");
-        assertEquals(filteredPaths.get(5).toString(), "src/test/resources/Cyberpunk-image5.png");
-        assertEquals(filteredPaths.get(6).toString(), "photomode_25072023_211629");
-        assertEquals(filteredPaths.get(7).toString(), "photomode_25072023_211822");
-
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/Cyberpunk-image.png")));
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/Cyberpunk-image1.png")));
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/Cyberpunk-image2.png")));
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/Cyberpunk-image3.png")));
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/Cyberpunk-image4.png")));
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/Cyberpunk-image5.png")));
+        assertTrue(filteredPaths.contains(Path.of("photomode_25072023_211629")));
+        assertTrue(filteredPaths.contains(Path.of("photomode_25072023_211822")));
     }
 
     @Test
@@ -93,12 +93,11 @@ public class AbstractFilterTest {
 
         // then
         assertEquals(filteredPaths.size(), 6);
-        assertEquals(filteredPaths.get(0).toString(), "src/test/resources/test_diskmap5.txt");
-        assertEquals(filteredPaths.get(1).toString(), "src/test/resources/test_diskmap1.txt");
-        assertEquals(filteredPaths.get(2).toString(), "src/test/resources/test_diskmap2.txt");
-        assertEquals(filteredPaths.get(3).toString(), "src/test/resources/test_diskmap3.txt");
-        assertEquals(filteredPaths.get(4).toString(), "src/test/resources/test_diskmap4.txt");
-        assertEquals(filteredPaths.get(5).toString(), "src/test/resources/test_diskmap1.txt");
-
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/test_diskmap.txt")));
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/test_diskmap1.txt")));
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/test_diskmap2.txt")));
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/test_diskmap3.txt")));
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/test_diskmap4.txt")));
+        assertTrue(filteredPaths.contains(Path.of("src/test/resources/test_diskmap5.txt")));
     }
 }

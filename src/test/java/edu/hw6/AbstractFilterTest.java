@@ -44,6 +44,7 @@ public class AbstractFilterTest {
         assertTrue(filteredPaths.contains(Path.of("src/test/resources/Cyberpunk-image5.png")));
 //        assertTrue(filteredPaths.contains(Path.of("photomode_25072023_211629")));
 //        assertTrue(filteredPaths.contains(Path.of("photomode_25072023_211822")));
+        // я хз почему но гит не хочет видеть эти файлы, я даже не знаю как это проверить особо :-(
     }
 
     @Test

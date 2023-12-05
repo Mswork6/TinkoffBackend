@@ -19,8 +19,8 @@ public class AbstractFilterTest {
         Path dir = Paths.get("src/test/resources/");
         List<Path> filteredPaths = new ArrayList<>();
 
-        AbstractFilter filter = AbstractFilter.regularFile
-            .and(AbstractFilter.writable)
+        AbstractFilter filter = AbstractFilter.REGULAR_FILE
+            .and(AbstractFilter.WRITABLE)
             .and(AbstractFilter.magicNumber((byte) 0x89, (byte) 'P', (byte) 'N', (byte) 'G'))
             .and(AbstractFilter.largerThan(100_000))
             .and(AbstractFilter.globMatches("*.png"))
@@ -48,8 +48,8 @@ public class AbstractFilterTest {
         Path dir = Paths.get("src/test/resources/");
         List<Path> filteredPaths = new ArrayList<>();
 
-        AbstractFilter filter = AbstractFilter.regularFile
-            .and(AbstractFilter.writable)
+        AbstractFilter filter = AbstractFilter.REGULAR_FILE
+            .and(AbstractFilter.WRITABLE)
             .and(AbstractFilter.magicNumber((byte) 0x89, (byte) 'L', (byte) 'M', (byte) 'B'))
             .and(AbstractFilter.largerThan(10_000))
             .and(AbstractFilter.globMatches("*.png"))
@@ -73,8 +73,8 @@ public class AbstractFilterTest {
         Path dir = Paths.get("src/test/resources/");
         List<Path> filteredPaths = new ArrayList<>();
 
-        AbstractFilter filter = AbstractFilter.regularFile
-            .and(AbstractFilter.readable)
+        AbstractFilter filter = AbstractFilter.REGULAR_FILE
+            .and(AbstractFilter.READABLE)
             .and(AbstractFilter.largerThan(-1))
             .and(AbstractFilter.globMatches("*.txt"))
             .and(AbstractFilter.regexContains("test_diskmap"));

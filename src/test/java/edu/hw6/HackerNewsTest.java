@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class HackerNewsTest {
     @Test
     @DisplayName("Проверка получения наиболее обсуждаемых статей")
-    void checkGetTopStories() {
+    void checkGetTopStories() throws Exception {
         // Given
         HackerNews hackerNews = new HackerNews();
 
@@ -21,7 +21,7 @@ public class HackerNewsTest {
 
     @Test
     @DisplayName("Проверка некорректного получения наиболее обсуждаемых статей")
-    void checkIncorrectGetTopStories() {
+    void checkIncorrectGetTopStories() throws Exception {
         // Given
         HackerNews hackerNews = new HackerNews();
 
@@ -34,7 +34,7 @@ public class HackerNewsTest {
 
     @Test
     @DisplayName("Проверка корректного названия новости")
-    void checkCorrectNewsTitle() {
+    void checkCorrectNewsTitle() throws Exception {
         // Given
         HackerNews hackerNews = new HackerNews();
         long id = 37570037;
@@ -49,7 +49,7 @@ public class HackerNewsTest {
 
     @Test
     @DisplayName("Проверка некорректного названия новости")
-    void checkIncorrectNewsTitle() {
+    void checkIncorrectNewsTitle() throws Exception {
         // Given
         HackerNews hackerNews = new HackerNews();
         long id = 0;

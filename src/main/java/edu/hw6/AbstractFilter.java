@@ -1,10 +1,10 @@
 package edu.hw6;
 
+import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.io.IOException;
 
 public interface AbstractFilter extends DirectoryStream.Filter<Path> {
     boolean accept(Path path);
@@ -13,9 +13,9 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
         return path -> this.accept(path) && other.accept(path);
     }
 
-    AbstractFilter regularFile = Files::isRegularFile;
-    AbstractFilter readable = Files::isReadable;
-    AbstractFilter writable = Files::isWritable;
+    AbstractFilter REGULAR_FILE = Files::isRegularFile;
+    AbstractFilter READABLE = Files::isReadable;
+    AbstractFilter WRITABLE = Files::isWritable;
 
     static AbstractFilter largerThan(long size) {
         return path -> {

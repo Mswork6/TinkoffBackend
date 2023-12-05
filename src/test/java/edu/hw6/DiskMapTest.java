@@ -2,6 +2,7 @@ package edu.hw6;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class DiskMapTest {
     @Test
     @DisplayName("Проверка добавления элементов")
-    void testPutAndGet() {
+    void testPutAndGet() throws IOException {
         // given
         DiskMap diskMap = new DiskMap("src/test/resources/test_diskmap.txt");
 
@@ -25,7 +26,7 @@ public class DiskMapTest {
 
     @Test
     @DisplayName("Проверка корректной длины")
-    void testSize() {
+    void testSize() throws IOException {
         // given
         DiskMap diskMap = new DiskMap("src/test/resources/test_diskmap1.txt");
 
@@ -46,7 +47,7 @@ public class DiskMapTest {
 
     @Test
     @DisplayName("Проверка наличия ключей и значений")
-    void testContainsKeyAndValue() {
+    void testContainsKeyAndValue() throws IOException {
         // given
         DiskMap diskMap = new DiskMap("src/test/resources/test_diskmap2.txt");
 
@@ -64,7 +65,7 @@ public class DiskMapTest {
 
     @Test
     @DisplayName("Проверка корректного удаления элемента")
-    void testRemove() {
+    void testRemove() throws IOException {
         // given
         DiskMap diskMap = new DiskMap("src/test/resources/test_diskmap3.txt");
 
@@ -80,7 +81,7 @@ public class DiskMapTest {
 
     @Test
     @DisplayName("Проверка удаления всех элементов")
-    void testClear() {
+    void testClear() throws IOException {
         // given
         DiskMap diskMap = new DiskMap("src/test/resources/test_diskmap4.txt");
 
@@ -97,7 +98,7 @@ public class DiskMapTest {
 
     @Test
     @DisplayName("Проверка чтения элементов из файла")
-    void testReadData() {
+    void testReadData() throws IOException {
         // given
         DiskMap diskMap = new DiskMap("src/test/resources/test_diskmap5.txt");
 

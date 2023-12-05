@@ -16,23 +16,19 @@ public class DiskMap implements Map<String, String> {
     private final Path filePath;
     private final Map<String, String> inMemoryMap;
 
-    public DiskMap(String filePath) {
+    public DiskMap(String filePath) throws IOException {
         this.filePath = Paths.get(filePath);
         this.inMemoryMap = new HashMap<>();
         loadFromFile();
     }
 
-    private void loadFromFile() {
-        try {
-            List<String> lines = Files.readAllLines(filePath);
-            for (String line : lines) {
-                String[] parts = line.split(":");
-                if (parts.length == 2) {
-                    inMemoryMap.put(parts[0], parts[1]);
-                }
+    private void loadFromFile() throws IOException {
+        List<String> lines = Files.readAllLines(filePath);
+        for (String line : lines) {
+            String[] parts = line.split(":");
+            if (parts.length == 2) {
+                inMemoryMap.put(parts[0], parts[1]);
             }
-        } catch (IOException e) {
-            System.err.println("Ошибка чтения из файла: " + e.getMessage());
         }
     }
 
@@ -46,6 +42,10 @@ public class DiskMap implements Map<String, String> {
         } catch (IOException e) {
             System.err.println("Ошибка записи в файл: " + e.getMessage());
         }
+        /* Тут наверное лучше оставить catch, так как если убрать его и просто прокидывать
+        дальше, то надо будет писать try/catch для методов, которые используют метод saveToFile.
+        Прокидывать в тех методах исключение дальше не получается, так как они переопределённые.
+         */
     }
 
     @Override

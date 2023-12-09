@@ -128,4 +128,97 @@ public class Project2Test {
         assertThrows(IllegalArgumentException.class, () -> solver.solve(maze, start, end));
     }
 
+    @Test
+    @DisplayName("Проверка правильного нахождения пути в лабиринте в многопотоке")
+    void checkRightPathMultiThread() {
+        // given
+        boolean[][] verticalWalls = {
+            {true, true, false, false, true},
+            {false, false, true, true, true},
+            {false, true, true, false, true},
+            {false, true, true, true, true},
+            {false, false, false, false, false},
+        };
+
+        boolean[][] horizontalWalls = {
+            {false, false, false, false, true},
+            {true, false, false, false, false},
+            {true, false, false, true, true},
+            {true, true, false, false, false},
+            {true, true, true, true, true},
+        };
+
+        int height = 5;
+        int width = 5;
+
+        List<Coordinate> answer = new ArrayList<>();
+        answer.add(new Coordinate(0, 0));
+        answer.add(new Coordinate(1, 0));
+        answer.add(new Coordinate(1, 1));
+        answer.add(new Coordinate(1, 2));
+        answer.add(new Coordinate(2, 2));
+        answer.add(new Coordinate(3, 2));
+        answer.add(new Coordinate(4, 2));
+        answer.add(new Coordinate(4, 3));
+        answer.add(new Coordinate(3, 3));
+
+        Coordinate start = new Coordinate(0, 0);
+        Coordinate end = new Coordinate(3, 3);
+
+        // when
+        Maze maze = new Maze(height, width, verticalWalls, horizontalWalls);
+        Solver solver = new ParallelDepthFirstSearch();
+        List<Coordinate> result = solver.solve(maze, start, end);
+
+        // then
+        assertEquals(result, answer);
+    }
+
+    @Test
+    @DisplayName("Проверка правильной отрисовки лабиринта в многопотоке")
+    void checkRightMazeMultiThread() {
+        // given
+        boolean[][] verticalWalls = {
+            {false, true, true, false, true},
+            {true, false, false, true, true},
+            {false, false, true, true, true},
+            {false, false, true, false, true},
+            {false, false, true, false, true},
+        };
+
+        boolean[][] horizontalWalls = {
+            {true, false, false, true, true},
+            {true, true, false, false, false},
+            {true, false, true, false, false},
+            {true, false, false, false, false},
+            {true, true, true, true, true},
+        };
+
+        int height = 5;
+        int width = 5;
+
+        String answer =
+            """
+                _____________________
+                |_■__ ■ |   |_______|
+                |___|_■__ ■   ■ |   |
+                |____    ___| ■ |   |
+                |____       | ■     |
+                |___________|_______|
+                """;
+
+        Coordinate start = new Coordinate(0, 0);
+        Coordinate end = new Coordinate(3, 3);
+
+        // when
+        Maze maze = new Maze(height, width, verticalWalls, horizontalWalls);
+        Solver solver = new ParallelDepthFirstSearch();
+        List<Coordinate> path = solver.solve(maze, start, end);
+        MazeRenderer renderer = new MazeRenderer();
+        String result = renderer.render(maze, path);
+
+        // then
+        assertEquals(result, answer);
+    }
+
 }

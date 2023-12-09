@@ -50,16 +50,16 @@ public class ParallelDepthFirstSearch implements Solver {
                     List<CompletableFuture<Void>> futures = new ArrayList<>();
 
                     futures.add(CompletableFuture.runAsync(() -> checkAndProcessNeighbor(x, y + 1, x, y, maze,
-                        path, visited, stack
+                        path, visited, stack, end
                     ), executorService));
                     futures.add(CompletableFuture.runAsync(() -> checkAndProcessNeighbor(x, y - 1, x, y, maze,
-                        path, visited, stack
+                        path, visited, stack, end
                     ), executorService));
                     futures.add(CompletableFuture.runAsync(() -> checkAndProcessNeighbor(x + 1, y, x, y, maze,
-                        path, visited, stack
+                        path, visited, stack, end
                     ), executorService));
                     futures.add(CompletableFuture.runAsync(() -> checkAndProcessNeighbor(x - 1, y, x, y, maze,
-                        path, visited, stack
+                        path, visited, stack, end
                     ), executorService));
 
                     CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
@@ -72,14 +72,14 @@ public class ParallelDepthFirstSearch implements Solver {
             executorService.shutdown();
         }
 
-        return (visited[end.row()][end.col()]) ? reconstructPath(start, path) : null;
+        return (visited[end.row()][end.col()]) ? reconstructPath(start, end, path) : null;
     }
 
     @SuppressWarnings("ParameterNumber")
     private void checkAndProcessNeighbor(
         int newX, int newY, int startX, int startY,
         Maze maze, Coordinate[][] path,
-        boolean[][] visited, Deque<Coordinate> stack
+        boolean[][] visited, Deque<Coordinate> stack, Coordinate end
     ) {
         if (solutionFound.get()) {
             return;
@@ -122,7 +122,7 @@ public class ParallelDepthFirstSearch implements Solver {
         return end.row() >= 0 && end.row() < height && end.col() >= 0 && end.col() < width;
     }
 
-    private List<Coordinate> reconstructPath(Coordinate end, Coordinate[][] path) {
+    private List<Coordinate> reconstructPath(Coordinate start, Coordinate end, Coordinate[][] path) {
         List<Coordinate> result = new ArrayList<>();
         Coordinate current = end;
 

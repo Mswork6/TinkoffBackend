@@ -58,27 +58,34 @@ public class Project4Test {
     @DisplayName("Проверка работоспособности модуля сохранения")
     public void testSaver() throws IOException {
         // given
-        Files.deleteIfExists(Path.of("test.jpeg"));
+        Files.deleteIfExists(Path.of("test.png"));
 
         //when
-        ImageSaver.saveImage(Path.of("test.jpeg"), ImageFormat.JPEG,
+        ImageSaver.saveImage(Path.of("test.png"), ImageFormat.PNG,
             FractalImage.createImage(1920, 1080));
 
         //then
-        assertThat(Path.of("test.jpeg")).exists();
+        assertThat(Path.of("test.png")).exists();
     }
 
     @Test
     @DisplayName("Проверка работоспособности лаунчера")
-    public void testGamma() {
+    public void testGamma() throws IOException {
+        // given
+        Files.deleteIfExists(Path.of("test.png"));
+
+        //when
         Assertions.assertDoesNotThrow(() ->
             Main.generateImage(1920,
                 1080,
                 new MultiThreadRenderer(),
                 new Rect(-8, -5, 16, 12),
                 List.of(new SwirlTransformation()),
-                ImageFormat.JPEG,
-                Path.of("output.jpeg")
+                ImageFormat.BMP,
+                Path.of("output.bmp")
             ));
+
+        //then
+        assertThat(Path.of("output.bmp")).exists();
     }
 }

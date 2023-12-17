@@ -24,7 +24,7 @@ import org.openjdk.jmh.runner.options.TimeValue;
 
 @State(Scope.Thread)
 public class StudentBenchmark {
-    @SuppressWarnings("MagicNumber")
+    @SuppressWarnings({"MagicNumber", "UncommentedMain"})
     public static void main(String[] args) throws RunnerException {
         Options options = new OptionsBuilder()
             .include(StudentBenchmark.class.getSimpleName())

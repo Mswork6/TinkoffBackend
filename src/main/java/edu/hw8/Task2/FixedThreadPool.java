@@ -22,10 +22,14 @@ public class FixedThreadPool implements ThreadPool {
     public void start() {
         for (int i = 0; i < numThreads; i++) {
             threads[i] = new Thread(() -> {
-                while (!taskQueue.isEmpty()) {
-                    Runnable task = taskQueue.poll(); // Извлекаем задачу, но не блокируемся, если очередь пуста
-                    if (task != null) {
+                while (true) {
+                    try {
+                        Runnable task = taskQueue.take();
                         task.run();
+                    } catch (InterruptedException e) {
+                        // Поток был прерван, выходим из цикла
+                        Thread.currentThread().interrupt();
+                        break;
                     }
                 }
             });
@@ -56,5 +60,4 @@ public class FixedThreadPool implements ThreadPool {
             thread.interrupt();
         }
     }
-
 }

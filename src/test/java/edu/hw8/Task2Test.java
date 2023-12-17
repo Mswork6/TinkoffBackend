@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import static edu.hw8.Task2.Fibonacci.calculateFibonacci;
+import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Task2Test {
@@ -28,6 +29,17 @@ public class Task2Test {
                 });
             }
             threadPool.start();
+            sleep(1000);
+            threadPool.execute(() -> {
+                long result = calculateFibonacci(10);
+                values.add(result);
+            });
+            sleep(1000);
+            threadPool.execute(() -> {
+                long result = calculateFibonacci(11);
+                values.add(result);
+            });
+            threadPool.close();
             threadPool.join();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -35,7 +47,7 @@ public class Task2Test {
         Collections.sort(values);
 
         // then
-        assertEquals(values.size(), 10);
+        assertEquals(values.size(), 12);
         assertEquals(values.get(0), 0);
         assertEquals(values.get(1), 1);
         assertEquals(values.get(2), 1);
@@ -46,5 +58,7 @@ public class Task2Test {
         assertEquals(values.get(7), 13);
         assertEquals(values.get(8), 21);
         assertEquals(values.get(9), 34);
+        assertEquals(values.get(10), 55);
+        assertEquals(values.get(11), 89);
     }
 }

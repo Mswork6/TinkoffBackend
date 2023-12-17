@@ -18,14 +18,13 @@ public class QuoteServer {
     public static void startServer(int maxConnections, int maxRequests) {
         try (ExecutorService executorService = Executors.newFixedThreadPool(maxConnections)) {
 
-            Semaphore semaphore = new Semaphore(maxConnections);
 
             try (ServerSocket serverSocket = new ServerSocket(PORT)) {
                 System.out.println("Сервер запущен. Ожидание соединений...");
 
                 for (int i = 0; i < maxRequests; i++) {
                     Socket clientSocket = serverSocket.accept();
-                    executorService.submit(new ClientHandler(clientSocket, semaphore));
+                    executorService.submit(new ClientHandler(clientSocket));
                 }
 
                 executorService.shutdown();

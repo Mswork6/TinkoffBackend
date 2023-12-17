@@ -41,7 +41,7 @@ public class Task1Test {
         Thread servThread = new Thread(() -> QuoteServer.startServer(maxConnections, maxRequests));
         servThread.start();
         sleep(100);
-        QuoteClient.startClient(maxRequests, request);
+        QuoteClient.startClient(maxRequests, request, "localhost", 12345);
         servThread.join();
 
         // Then
@@ -64,7 +64,7 @@ public class Task1Test {
         Thread servThread = new Thread(() -> QuoteServer.startServer(maxConnections, maxRequests));
         servThread.start();
         sleep(100);
-        QuoteClient.startClient(maxRequests, request);
+        QuoteClient.startClient(maxRequests, request, "localhost", 12345);
         servThread.join();
 
         // Then

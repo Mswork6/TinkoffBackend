@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         Thread servThread = new Thread(() -> QuoteServer.startServer(MAX_CONNECTIONS, MAX_REQUESTS));
-        Thread clientThread = new Thread(() -> QuoteClient.startClient(MAX_REQUESTS));
+        Thread clientThread = new Thread(() -> QuoteClient.startClient(MAX_REQUESTS, "localhost", 12345));
         servThread.start();
         sleep(SLEEP_TIME);
         clientThread.start();

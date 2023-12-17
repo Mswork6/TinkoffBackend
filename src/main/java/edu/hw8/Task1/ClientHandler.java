@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Semaphore;
 import static java.lang.Thread.sleep;
 
 class ClientHandler implements Runnable {
@@ -16,8 +15,10 @@ class ClientHandler implements Runnable {
 
     static {
         RESPONSE_MAP.put("личности", "Не переходи на личности там, где их нет");
-        RESPONSE_MAP.put("оскорбления", "Если твои противники перешли на личные оскорбления, будь уверен — твоя победа не за горами");
-        RESPONSE_MAP.put("глупый", "А я тебе говорил, что ты глупый? Так вот, я забираю свои слова обратно... Ты просто бог идиотизма.");
+        RESPONSE_MAP.put("оскорбления", "Если твои противники перешли на личные оскорбления, будь уверен — "
+                + "твоя победа не за горами");
+        RESPONSE_MAP.put("глупый", "А я тебе говорил, что ты глупый? Так вот, я забираю свои слова обратно... "
+                + "Ты просто бог идиотизма.");
         RESPONSE_MAP.put("интеллект", "Чем ниже интеллект, тем громче оскорбления");
     }
 

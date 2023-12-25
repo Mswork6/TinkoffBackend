@@ -55,7 +55,7 @@ public class MazeGenerator implements Generator {
         int newCounter = counter;
         for (int i = 0; i < width; i++) {
             if (line[i] == EMPTY_VALUE) {
-                line[i] = counter;
+                line[i] = newCounter;
                 newCounter += 1;
             }
         }

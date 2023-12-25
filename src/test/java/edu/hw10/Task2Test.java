@@ -70,6 +70,33 @@ class Task2Test {
         File file = Path.of("fib.txt").toFile();
         assertTrue(file.exists());
 
+    }
+
+    @Test
+    @DisplayName("Проверка работоспособности метода с чтением кеша из файла")
+    public void testCacheProxyReadingFile() {
+        //given
+
+        // Создаем экземпляр калькулятора и его прокси
+        TestFibCalculator calculator = new TestFibCalculator();
+        FibCalculator proxy = CacheProxy.create(calculator, FibCalculator.class);
+
+        //when
+
+        //then
+
+        // Первый вызов - не из кэша
+        long result1 = proxy.fib(5);
+        assertEquals(0, calculator.getFibMethodCallCount());
+
+        // Вызов с другим аргументом - не из кэша
+        long result3 = proxy.fib(8);
+        assertEquals(0, calculator.getFibMethodCallCount());
+
+
+        File file = Path.of("fib.txt").toFile();
+        assertTrue(file.exists());
+
         if (file.exists()){
             file.delete();
         }
